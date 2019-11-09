@@ -1,0 +1,152 @@
+<html>
+<head>
+	
+	<title>Install Goproxy with IBM Cloud Lite</title>
+	<meta name="keywords" content="Curtails的blog" />
+
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    
+	   <link href="/css/main.css?v=3" rel="stylesheet" type="text/css" />
+    
+        <script src="/js/util.js"></script>
+        <script>
+            if(isMobile()) {
+                loadjscssfile('../css/mobile.css', 'css');
+            } else {
+                loadjscssfile('../css/desktop.css', 'css');
+            }
+        </script> 
+    
+
+    <link rel="alternate" type="application/atom+xml" href="/atom.xml" title="Atom feed">
+
+    
+	<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=3"/>
+    
+    
+
+</head>
+
+<body>
+
+
+<h2 class="title">Install Goproxy with IBM Cloud Lite</h2>
+<!---
+<div style="text-align:center;margin-top: -10px;">
+<div class="article-category">
+发表于2019年7月18日
+
+
+
+
+ </div>
+--->
+</div>
+
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#IBM-Cloud-Lite-特点"><span class="toc-text">IBM Cloud Lite 特点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IBM-Cloud-Lite-创建"><span class="toc-text">IBM Cloud Lite 创建</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#注册IBM账户（略）"><span class="toc-text">注册IBM账户（略）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建资源"><span class="toc-text">创建资源</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装-Goproxy"><span class="toc-text">安装 Goproxy</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用在线SSH连接应用"><span class="toc-text">使用在线SSH连接应用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#部署Goproxy服务端"><span class="toc-text">部署Goproxy服务端</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#部署Goproxy本地端"><span class="toc-text">部署Goproxy本地端</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#提升使用体验"><span class="toc-text">提升使用体验</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用SwitchyOmega管理代理"><span class="toc-text">使用SwitchyOmega管理代理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#防止PHP应用程序休眠"><span class="toc-text">防止PHP应用程序休眠</span></a></li></ol></li></ol>
+<p>Goproxy is a powerful proxy.</p>
+<h2 id="IBM-Cloud-Lite-特点"><a href="#IBM-Cloud-Lite-特点" class="headerlink" title="IBM Cloud Lite 特点"></a>IBM Cloud Lite 特点</h2><ul>
+<li>免费使用</li>
+<li>无需信用卡</li>
+<li>账户永不过期</li>
+</ul>
+<h2 id="IBM-Cloud-Lite-创建"><a href="#IBM-Cloud-Lite-创建" class="headerlink" title="IBM Cloud Lite 创建"></a>IBM Cloud Lite 创建</h2><h3 id="注册IBM账户（略）"><a href="#注册IBM账户（略）" class="headerlink" title="注册IBM账户（略）"></a>注册IBM账户（略）</h3><p><a href="https://cloud.ibm.com/" target="_blank" rel="noopener">IBM Cloud官网</a></p>
+<ul>
+<li>注册有谷歌验证需要梯子</li>
+</ul>
+<h3 id="创建资源"><a href="#创建资源" class="headerlink" title="创建资源"></a>创建资源</h3><ul>
+<li>创建轻量PHP应用</li>
+</ul>
+<p><img src="https://i.loli.net/2019/07/18/5d304c07597c026701.png" alt=""></p>
+<ul>
+<li>填写应用程序名称</li>
+<li>选择域（推荐cf.appdomain.cloud）</li>
+<li>选择位置（推荐达拉斯）</li>
+<li>选择价格套餐（免费最多可选256M）</li>
+</ul>
+<p><img src="https://i.loli.net/2019/07/18/5d304cd9efc4b73464.png" alt=""></p>
+<ul>
+<li>创建之后启动该应用</li>
+</ul>
+<p><img src="https://i.loli.net/2019/07/18/5d304e0adf4c124800.png" alt=""></p>
+<h2 id="安装-Goproxy"><a href="#安装-Goproxy" class="headerlink" title="安装 Goproxy"></a>安装 Goproxy</h2><h3 id="使用在线SSH连接应用"><a href="#使用在线SSH连接应用" class="headerlink" title="使用在线SSH连接应用"></a>使用在线SSH连接应用</h3><ul>
+<li>打开应用查看概述</li>
+</ul>
+<p><img src="https://i.loli.net/2019/07/18/5d304f6c869e518546.png" alt=""></p>
+<ul>
+<li>点击运行时-SSH</li>
+</ul>
+<p><img src="https://i.loli.net/2019/07/18/5d304fce9e92d85479.png" alt=""></p>
+<h3 id="部署Goproxy服务端"><a href="#部署Goproxy服务端" class="headerlink" title="部署Goproxy服务端"></a>部署Goproxy服务端</h3><ul>
+<li>在SSH执行以下命令即可</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /home/vcap/app/htdocs</span><br><span class="line">rm -rf *</span><br><span class="line">git clone https://github.com/malaohu/goproxy-php.git &amp;&amp; mv goproxy-php/* ./</span><br></pre></td></tr></table></figure>
+
+<h3 id="部署Goproxy本地端"><a href="#部署Goproxy本地端" class="headerlink" title="部署Goproxy本地端"></a>部署Goproxy本地端</h3><ul>
+<li><p>下载本地端</p>
+<p><a href="https://pan.black1ce.com/GAE%E7%B1%BB%E4%BB%A3%E7%90%86/Goproxy%2064%E4%BD%8D.7z" target="_blank" rel="noopener">下载地址</a></p>
+</li>
+<li><p>解压后打开php.json</p>
+<p><img src="https://i.loli.net/2019/07/18/5d30540907ea457856.png" alt=""></p>
+</li>
+<li><p>需要修改三个位置URL、Password 以及SSLVerify</p>
+<p>“URL”:”访问应用程序URL//index.php”</p>
+<p>本地端Password与服务端goproxy.php中Password保持一致 本例中”Password”:”123456”</p>
+<p>SSLVerify ：URL为https则为true；http则为flase</p>
+</li>
+<li><p>修改浏览器端口为8080并运行goproxy-gui.exe即可使用</p>
+</li>
+</ul>
+<h2 id="提升使用体验"><a href="#提升使用体验" class="headerlink" title="提升使用体验"></a>提升使用体验</h2><h3 id="使用SwitchyOmega管理代理"><a href="#使用SwitchyOmega管理代理" class="headerlink" title="使用SwitchyOmega管理代理"></a>使用SwitchyOmega管理代理</h3><ul>
+<li><p>安装chrome插件SwitchyOmega</p>
+</li>
+<li><p>创建一个新的情景模式</p>
+<p><img src="https://i.loli.net/2019/07/18/5d3056f77e8f587733.png" alt=""></p>
+</li>
+<li><p>使用Goproxy时切换代理；不使用时还原代理</p>
+<p><img src="https://i.loli.net/2019/07/18/5d30573c88d8e93437.png" alt=""></p>
+</li>
+<li><p>此扩展方便切换代理</p>
+</li>
+</ul>
+<h3 id="防止PHP应用程序休眠"><a href="#防止PHP应用程序休眠" class="headerlink" title="防止PHP应用程序休眠"></a>防止PHP应用程序休眠</h3><p>根据IBM Cloud规则，10天应用程序不活跃就要休眠。</p>
+<p>我们可以使用云监控避免不活跃导致休眠。</p>
+<p>国内的免费云监控很多，例如<a href="https://www.aliyun.com/product/jiankong/" target="_blank" rel="noopener">阿里云云监控</a>。</p>
+<p><img src="https://i.loli.net/2019/07/18/5d305917a661467035.png" alt=""></p>
+<ul>
+<li>点击站点监控-站点管理-新建监控任务</li>
+</ul>
+<p><img src="https://i.loli.net/2019/07/18/5d30598c98e2f46155.png" alt=""></p>
+<ul>
+<li>按照说明设置即可</li>
+</ul>
+
+
+<!--<a href="https://curtails.github.io/2019/07/18/ibm-cloud-lite-goproxy/#disqus_thread" class="article-comment-link">Comments</a>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = ''; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+-->
+<div style="display:none">
+<script src="http://s4.cnzz.com/stat.php?id=&web_id=" language="JavaScript"></script>script>
+</div>
+
+
+
+
+
+
+</body>
+</html>

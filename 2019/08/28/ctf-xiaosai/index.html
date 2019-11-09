@@ -1,0 +1,191 @@
+<html>
+<head>
+	
+	<title>2019-秋季-校-CTF-WriteUp</title>
+	<meta name="keywords" content="Curtails的blog" />
+
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    
+	   <link href="/css/main.css?v=3" rel="stylesheet" type="text/css" />
+    
+        <script src="/js/util.js"></script>
+        <script>
+            if(isMobile()) {
+                loadjscssfile('../css/mobile.css', 'css');
+            } else {
+                loadjscssfile('../css/desktop.css', 'css');
+            }
+        </script> 
+    
+
+    <link rel="alternate" type="application/atom+xml" href="/atom.xml" title="Atom feed">
+
+    
+	<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=3"/>
+    
+    
+
+</head>
+
+<body>
+
+
+<h2 class="title">2019-秋季-校-CTF-WriteUp</h2>
+<!---
+<div style="text-align:center;margin-top: -10px;">
+<div class="article-category">
+发表于2019年8月28日
+
+
+
+
+ </div>
+--->
+</div>
+
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#加密"><span class="toc-text">加密</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Easycrypto"><span class="toc-text">Easycrypto</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Warm-up"><span class="toc-text">Warm up</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#read-me"><span class="toc-text">read me</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#又是维吉尼亚"><span class="toc-text">又是维吉尼亚</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#rsa"><span class="toc-text">rsa</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#MISC"><span class="toc-text">MISC</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#hiddenbears"><span class="toc-text">hiddenbears</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#wakaka"><span class="toc-text">wakaka</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hidden91"><span class="toc-text">Hidden91</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二维码动图"><span class="toc-text">二维码动图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#泰加熊"><span class="toc-text">泰加熊</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mmmmmm"><span class="toc-text">mmmmmm</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#PWN"><span class="toc-text">PWN</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#简单的溢出"><span class="toc-text">简单的溢出?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#拼接成-shell"><span class="toc-text">拼接成 shell</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Reverse"><span class="toc-text">Reverse</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#安卓签到"><span class="toc-text">安卓签到 </span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-位数"><span class="toc-text">4 位数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vvv"><span class="toc-text">vvv </span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Web"><span class="toc-text">Web</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#签到"><span class="toc-text">签到</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#easy"><span class="toc-text">easy</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#相同的-MD5"><span class="toc-text">相同的 MD5</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#序列化"><span class="toc-text">序列化 </span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#过四关"><span class="toc-text">过四关</span></a></li></ol></li></ol>
+<p>2019-秋季-校-CTF-WriteUp.<br>记录一次真正意义上的CTF比赛；吸取教训，总结经验。</p>
+<ul>
+<li>教训：远远不够仔细 不够熟练</li>
+<li>经验：第一次知识在实战中磨合 有了印象</li>
+</ul>
+<h1 id="加密"><a href="#加密" class="headerlink" title="加密"></a>加密</h1><h2 id="Easycrypto"><a href="#Easycrypto" class="headerlink" title="Easycrypto"></a><mark>Easycrypto</mark></h2><p>下载解压得lookcarefully.txt 打开显示</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">WXAD 3dwr G<span class="emphasis">_VN qz_</span>s RVDG 8kuo -'p] !A<span class="emphasis">_W wxad h_</span>bm rvdg h<span class="emphasis">_bm ECSF WXAD wxad =_</span>[\</span><br></pre></td></tr></table></figure>
+<p>这题没做出来的人是真的蠢 比如我 </p>
+<ul>
+<li>键盘密码 四个键位两两包围一个键位 拼起来即可</li>
+<li>SeBaFi{QsnfnDSs}</li>
+</ul>
+<h2 id="Warm-up"><a href="#Warm-up" class="headerlink" title="Warm up"></a><mark>Warm up</mark></h2><p>打开所给网址 显示以下信息</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$flag=<span class="string">"SeBaFi(*&#125;"</span>; <span class="keyword">echo</span> base64encode(gzcompress(hex2bin(strrev(urlencode(bin2hex($flag))))</span><br><span class="line">eJy7btoSfK20uWRbsJvxEfPIbUuWLCteli7qnnJsi2lYacuxtO3TUsRUwkwBjV4STA==</span><br></pre></td></tr></table></figure>
+<p>比赛时 字符串给的是错的？！现在的也是？？</p>
+<ul>
+<li>按照代码的编码逆序解码即可<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$s=eJy7btoSfK20uWRbsJvxEfPIbUuWLCteli7qnnJsi2lYacuxtO3TUsRUwkwBjV4STA==;</span><br><span class="line"><span class="keyword">echo</span> hex2bin(urldecode(strrev(bin2hex(gzuncompress(base64 decode($s))))));</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li>SeBaFi{flHWeSKlFtQqJ7jJJhzsL3d5kG8Wm5HS}</li>
+</ul>
+<h2 id="read-me"><a href="#read-me" class="headerlink" title="read me"></a><mark>read me</mark></h2><p>下载的压缩包含四个文件<code>1.txt 2.txt 3.txt flag.txt</code><br>Hint:小小小</p>
+<ul>
+<li>1 2 3文件小所以采用CRC碰撞绕过zip密码</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#coding:utf-8</span></span><br><span class="line"><span class="keyword">import</span> zipfile</span><br><span class="line"><span class="keyword">import</span> string</span><br><span class="line"><span class="keyword">import</span> binascii</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">CrackCrc</span><span class="params">(crc)</span>:</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> dic :</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> dic:</span><br><span class="line">            <span class="keyword">for</span> p <span class="keyword">in</span> dic:</span><br><span class="line">                <span class="comment">#for q in dic:</span></span><br><span class="line">                    s=i+j+p+q</span><br><span class="line">                    <span class="keyword">if</span> crc == (binascii.crc32(s) &amp; <span class="number">0xffffffff</span>):</span><br><span class="line">                        <span class="comment">#print s  </span></span><br><span class="line">                        f.write(s+<span class="string">"\n"</span>)</span><br><span class="line">                        <span class="keyword">return</span>  </span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">CrackZip</span><span class="params">()</span>:</span> </span><br><span class="line">    <span class="keyword">for</span> I <span class="keyword">in</span> range(<span class="number">54</span>):</span><br><span class="line">        file = <span class="string">'chunk'</span> + str(I) + <span class="string">'.zip'</span></span><br><span class="line">        f = zipfile.ZipFile(file, <span class="string">'r'</span>)</span><br><span class="line">        GetCrc = f.getinfo(<span class="string">'data.txt'</span>)</span><br><span class="line">        crc = GetCrc.CRC</span><br><span class="line">        <span class="comment">#以上3行为获取压缩包CRC32值的步骤</span></span><br><span class="line">        CrackCrc(crc)</span><br><span class="line"></span><br><span class="line">dic = string.ascii_letters + string.digits + <span class="string">'+/='</span></span><br><span class="line">f=open(<span class="string">'out.txt'</span>,<span class="string">'w'</span>)</span><br><span class="line">CrackZip()</span><br><span class="line">f.close()</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>分别执行三个txt文件的crc值 找出有规律的字符串</li>
+<li><code>keyisc rc32ue nit!@#</code>拼一起<code>keyiscrc32uenit!@#</code>为解压密码</li>
+<li>解压得flag</li>
+<li>SeBaFi{anheipo_huai_shen_three}</li>
+</ul>
+<h2 id="又是维吉尼亚"><a href="#又是维吉尼亚" class="headerlink" title="又是维吉尼亚"></a><mark>又是维吉尼亚</mark></h2><p>打开txt</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cmzzwtcdlimzydhphdelohroipptlwetydtchvadozstwdcmznyzvdqomiwzwivacmznyzv</span><br><span class="line">rhzwtcltmawvtvzvjphwopivjyijzdzgdwimzwyqqtmdzahdipwtrtyvdwvyskzmtcltmawroimirdzmwwzvdz</span><br><span class="line">vrzwivaweppikpzwipwtriprypidzwpzghripazvwhdeivadozfzehwuhmjhvhi </span><br><span class="line"></span><br><span class="line">NmSgNv&#123;m09f718v9kr8gk7p66ncv38nr0i44640&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>注意题目无密钥 密码描述为一长串的字符串 猜测词频分析</li>
+<li>访问<a href="https://quipqiup.com/" target="_blank" rel="noopener">https://quipqiup.com/</a> 模式选择<code>statistics</code>进行词频分析</li>
+<li>提取密钥<code>virginia</code></li>
+<li>利用密钥解密<code>NmSgNv{m09f718v9kr8gk7p66ncv38nr0i44640}</code></li>
+<li>SeBaFi{e09f718a9ca8ac7c66fca38fa0c44640}</li>
+</ul>
+<h2 id="rsa"><a href="#rsa" class="headerlink" title="rsa"></a><mark>rsa</mark></h2><p>hint：常规rsa<br>rsa不懂 留坑</p>
+<h1 id="MISC"><a href="#MISC" class="headerlink" title="MISC"></a>MISC</h1><h2 id="hiddenbears"><a href="#hiddenbears" class="headerlink" title="hiddenbears"></a><mark>hiddenbears</mark></h2><p>下载解压得到一张显示四头熊的图片</p>
+<ul>
+<li>看属性 无</li>
+<li>丢进winhex 无果</li>
+<li>丢进binwalk 无果</li>
+<li>丢进StegSolve 四周有白边</li>
+<li>切换几次颜色通道 能看到最上边有字符串 加上格式即可</li>
+<li>SeBaFi{Ao39gPDEzwrkojhEqNmtuDKc} </li>
+</ul>
+<h2 id="wakaka"><a href="#wakaka" class="headerlink" title="wakaka"></a>wakaka</h2><p>下载得压缩包 有密码 压缩里面是flag.txt<br>hint：密码为wakaka+五位数字</p>
+<ul>
+<li>上工具直接爆破 得密码<code>wakaka21051</code></li>
+</ul>
+<h2 id="Hidden91"><a href="#Hidden91" class="headerlink" title="Hidden91"></a>Hidden91</h2><p>下载得图片</p>
+<ul>
+<li>binwalk得压缩包解压得txt</li>
+<li>打开txt<code>7E4F66637478532424313A28352A24533E31514A255F245938216A7B420A</code></li>
+<li>base16解码得<code>~OfctxS$$1:(5*$S&gt;1QJ%_$Y8!j{B</code></li>
+<li>结合题目91 猜测base91解码</li>
+<li>SeBaFi{170065%shtxdddk}</li>
+</ul>
+<h2 id="二维码动图"><a href="#二维码动图" class="headerlink" title="二维码动图"></a>二维码动图</h2><p>下载得一gif</p>
+<ul>
+<li>没啥好说的逐帧分离gif 一个个就成</li>
+<li>SeBaFi{mAr10_i5_a_br0} </li>
+</ul>
+<h2 id="泰加熊"><a href="#泰加熊" class="headerlink" title="泰加熊"></a><mark>泰加熊</mark></h2><p>很恶心的题<br>下载解压得七张图片</p>
+<ul>
+<li>binwalk一个个试 第六张图片有点东西 分离出zip</li>
+<li>解压得名字为msg文件</li>
+<li>在linux下执行<code>./msg</code>可打开此文件</li>
+<li>Flag: B3znJluppFPJnNG7PAg</li>
+</ul>
+<h2 id="mmmmmm"><a href="#mmmmmm" class="headerlink" title="mmmmmm"></a><mark>mmmmmm</mark></h2><p>下载得一图片</p>
+<ul>
+<li>binwalk 分离出zip </li>
+<li>解压得readme.txt和另一个zip 此zip中含readme.txt及flag.txt</li>
+<li>这是明文攻击</li>
+<li>使用 AZPR 工具，选择文本攻击/AAPR明文竟然没用</li>
+<li>SeBaFif{readme_64%_jok}</li>
+</ul>
+<h1 id="PWN"><a href="#PWN" class="headerlink" title="PWN"></a>PWN</h1><h2 id="简单的溢出"><a href="#简单的溢出" class="headerlink" title="简单的溢出?"></a><mark>简单的溢出?</mark></h2><p>确实简单 只有蠢人不会做 比如我</p>
+<ul>
+<li>PEiD 分析发现不是有效的PE文件 可能试dos16位</li>
+<li>丢进ida32 查找字符串即可</li>
+<li>SebaFi{4cc09188c005dc1a5fad8c6e2551903}</li>
+</ul>
+<h2 id="拼接成-shell"><a href="#拼接成-shell" class="headerlink" title="拼接成 shell"></a><mark>拼接成 shell</mark></h2><p>留坑</p>
+<h1 id="Reverse"><a href="#Reverse" class="headerlink" title="Reverse"></a>Reverse</h1><h2 id="安卓签到"><a href="#安卓签到" class="headerlink" title="安卓签到 "></a><mark>安卓签到 </mark></h2><ul>
+<li>使用 jadx 工具反编译 apk</li>
+<li>查看res/layput/activity_main.xml</li>
+<li>SeBaFi{ee2faeed038501c1deab01c7b54f2fa9}</li>
+</ul>
+<h2 id="4-位数"><a href="#4-位数" class="headerlink" title="4 位数"></a><mark>4 位数</mark></h2><p>下载得re3.ppp</p>
+<ul>
+<li>丢进ida32 选中main反编译 得<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> __<span class="function">cdecl <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> **argv, <span class="keyword">const</span> <span class="keyword">char</span> **envp)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> result; <span class="comment">// eax</span></span><br><span class="line">  <span class="keyword">int</span> v4; <span class="comment">// [esp+24h] [ebp-84h]</span></span><br><span class="line">  <span class="keyword">int</span> v5; <span class="comment">// [esp+30h] [ebp-78h]</span></span><br><span class="line">  <span class="keyword">char</span> nptr; <span class="comment">// [esp+38h] [ebp-70h]</span></span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">int</span> v7; <span class="comment">// [esp+9Ch] [ebp-Ch]</span></span><br><span class="line"></span><br><span class="line">  v7 = __readgsdword(<span class="number">0x14</span>u);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"please input the key:"</span>);</span><br><span class="line">  <span class="built_in">memset</span>(&amp;nptr, <span class="number">0</span>, <span class="number">0x64</span>u);</span><br><span class="line">  __isoc99_scanf(<span class="string">"%s"</span>, &amp;nptr);</span><br><span class="line">  <span class="keyword">if</span> ( <span class="built_in">strlen</span>(&amp;nptr) != <span class="number">4</span></span><br><span class="line">    || (v4 = atoi(&amp;nptr), v5 = v4 % <span class="number">100</span> / <span class="number">10</span>, v4 % <span class="number">10</span> + v5 + v4 / <span class="number">1000</span> + v4 % <span class="number">1000</span> / <span class="number">100</span> != <span class="number">23</span>)</span><br><span class="line">    || v5 / (v4 % <span class="number">10</span>) != <span class="number">2</span></span><br><span class="line">    || v4 % <span class="number">1000</span> / <span class="number">100</span> - v5 != <span class="number">-1</span></span><br><span class="line">    || v4 / <span class="number">1000</span> % v5 != <span class="number">3</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">"wrong!"</span>);</span><br><span class="line">    result = <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">"correct!"</span>);</span><br><span class="line">    result = <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>根据功能 写payload</li>
+<li>SeBaFi{9563} SeBaFi{9563} </li>
+</ul>
+<h2 id="vvv"><a href="#vvv" class="headerlink" title="vvv "></a><mark>vvv </mark></h2><p>留坑</p>
+<h1 id="Web"><a href="#Web" class="headerlink" title="Web"></a>Web</h1><h2 id="签到"><a href="#签到" class="headerlink" title="签到"></a>签到</h2><p>白给题 查看源代码</p>
+<h2 id="easy"><a href="#easy" class="headerlink" title="easy"></a>easy</h2><p>打开网页显示 “Only allowed access by local address</p>
+<ul>
+<li>明显xff</li>
+<li>抓包加上<code>X-Forwarded-For: 127.0.0.1</code> go 显示信息提示我们access admin</li>
+<li>找到cookie<code>user=Z3Vlc3Q%3D</code> 试guest的base64 把admin的base64替换它 go</li>
+<li>SeBaFi{a5717a649d346ed0c51be68888c130cd}</li>
+</ul>
+<h2 id="相同的-MD5"><a href="#相同的-MD5" class="headerlink" title="相同的 MD5"></a>相同的 MD5</h2><p>打开网页找到最终网页</p>
+<ul>
+<li>啥也不说了 直接数组走起</li>
+</ul>
+<h2 id="序列化"><a href="#序列化" class="headerlink" title="序列化 "></a><mark>序列化 </mark></h2><p>留坑</p>
+<h2 id="过四关"><a href="#过四关" class="headerlink" title="过四关"></a><mark>过四关</mark></h2><p>留坑</p>
+
+
+<!--<a href="https://curtails.github.io/2019/08/28/ctf-xiaosai/#disqus_thread" class="article-comment-link">Comments</a>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = ''; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+-->
+<div style="display:none">
+<script src="http://s4.cnzz.com/stat.php?id=&web_id=" language="JavaScript"></script>script>
+</div>
+
+
+
+
+
+
+</body>
+</html>

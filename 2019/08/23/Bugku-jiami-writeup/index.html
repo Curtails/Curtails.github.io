@@ -1,0 +1,183 @@
+<html>
+<head>
+	
+	<title>BugkuCTF-加密-WriteUp</title>
+	<meta name="keywords" content="Curtails的blog" />
+
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    
+	   <link href="/css/main.css?v=3" rel="stylesheet" type="text/css" />
+    
+        <script src="/js/util.js"></script>
+        <script>
+            if(isMobile()) {
+                loadjscssfile('../css/mobile.css', 'css');
+            } else {
+                loadjscssfile('../css/desktop.css', 'css');
+            }
+        </script> 
+    
+
+    <link rel="alternate" type="application/atom+xml" href="/atom.xml" title="Atom feed">
+
+    
+	<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=3"/>
+    
+    
+
+</head>
+
+<body>
+
+
+<h2 class="title">BugkuCTF-加密-WriteUp</h2>
+<!---
+<div style="text-align:center;margin-top: -10px;">
+<div class="article-category">
+发表于2019年8月23日
+
+
+
+
+ </div>
+--->
+</div>
+
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#滴答-滴"><span class="toc-text">滴答~滴</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#聪明的小羊"><span class="toc-text">聪明的小羊</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ok"><span class="toc-text">ok</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#这不是摩斯密码"><span class="toc-text">这不是摩斯密码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#easy-crypto"><span class="toc-text">easy_crypto</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#简单加密"><span class="toc-text">简单加密</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#散乱的密文"><span class="toc-text">散乱的密文</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#凯撒部长的奖励"><span class="toc-text">凯撒部长的奖励</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#base64"><span class="toc-text">base64</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#null"><span class="toc-text">.!?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#-1"><span class="toc-text">+[]-</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#奇怪的密码"><span class="toc-text">奇怪的密码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#托马斯-杰斐逊"><span class="toc-text">托马斯.杰斐逊</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#zip伪加密"><span class="toc-text">zip伪加密</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#告诉你个秘密-ISCCCTF"><span class="toc-text">告诉你个秘密(ISCCCTF)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#这不是MD5"><span class="toc-text">这不是MD5</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#贝斯家族"><span class="toc-text">贝斯家族</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#富强民主"><span class="toc-text">富强民主</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#python-N1CTF"><span class="toc-text">python(N1CTF)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#进制转换"><span class="toc-text">进制转换</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#affine"><span class="toc-text">affine</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#crack-it"><span class="toc-text">crack it</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#rsa"><span class="toc-text">rsa</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#来自宇宙的信号"><span class="toc-text">来自宇宙的信号</span></a></li></ol>
+<p>BugkuCTF-加密-WriteUp</p>
+<h2 id="滴答-滴"><a href="#滴答-滴" class="headerlink" title="滴答~滴"></a>滴答~滴</h2><ul>
+<li>摩斯电码</li>
+<li>KEY{bkctfmisc}</li>
+</ul>
+<h2 id="聪明的小羊"><a href="#聪明的小羊" class="headerlink" title="聪明的小羊"></a>聪明的小羊</h2><p>一只小羊翻过了2个栅栏 KYsd3js2E{a2jda}</p>
+<ul>
+<li>栅栏密码 栏数为2</li>
+<li>KEY{sad23jjdsa2}</li>
+</ul>
+<h2 id="ok"><a href="#ok" class="headerlink" title="ok"></a>ok</h2><ul>
+<li>Ook!</li>
+<li>flag{ok-ctf-1234-admin}</li>
+</ul>
+<h2 id="这不是摩斯密码"><a href="#这不是摩斯密码" class="headerlink" title="这不是摩斯密码"></a>这不是摩斯密码</h2><ul>
+<li>Brainfuck</li>
+<li>flag{ok-c2tf-3389-admin}</li>
+</ul>
+<h2 id="easy-crypto"><a href="#easy-crypto" class="headerlink" title="easy_crypto"></a>easy_crypto</h2><p>一长串二进制 长短不一 是morse可以转换ASCII</p>
+<ul>
+<li>py：<a href="https://github.com/houhuiting/bugku-python/blob/master/binary%20morse_to_ascii.py" target="_blank" rel="noopener">https://github.com/houhuiting/bugku-python/blob/master/binary%20morse_to_ascii.py</a></li>
+<li>flag{morse_code_1s_interest1n9!}</li>
+</ul>
+<h2 id="简单加密"><a href="#简单加密" class="headerlink" title="简单加密"></a>简单加密</h2><p><code>e6Z9i~]8R~U~QHE{RnY{QXg~QnQ{^XVlRXlp^XI5Q6Q6SKY8jUAA</code>末尾AA形式很像==</p>
+<ul>
+<li>转换成ascii</li>
+<li>在前移4位<code>a 2 V 5 e z Y 4 N z Q z M D A w N j U w M T c z M j M  w Z T R h N T h l Z T E 1 M 2 M 2 O G U 4 f Q = =</code></li>
+<li>解码</li>
+<li>key{68743000650173230e4a58ee153c68e8}</li>
+</ul>
+<h2 id="散乱的密文"><a href="#散乱的密文" class="headerlink" title="散乱的密文"></a>散乱的密文</h2><p>lf5{ag024c483549d7fd@@1}<br>一张纸条上凌乱的写着2 1 6 5 3 4</p>
+<ul>
+<li>这个密码给了key 字符串仔细看有flag字符还有填充字符@</li>
+<li>字符串六行六列排列</li>
+<li>按照key顺序从小到大 对照字符串从上到下读<code>f25dl03fa4d1g87}{c9@544@</code></li>
+<li>栅栏解码 栏数6</li>
+<li>flag{52048c453d794df1}</li>
+</ul>
+<h2 id="凯撒部长的奖励"><a href="#凯撒部长的奖励" class="headerlink" title="凯撒部长的奖励"></a>凯撒部长的奖励</h2><p>凯撒密码</p>
+<ul>
+<li>SYC{here_Is_yOur_rEwArd_enjOy_It_Caesar_or_call_him_vIctOr_is_a_Excellent_man_if_you_want_to_get_his_informations_you_can_join_us}</li>
+</ul>
+<h2 id="base64"><a href="#base64" class="headerlink" title="base64"></a>base64</h2><p>不仅仅是base64</p>
+<ul>
+<li>base64 得到\ 数字组合</li>
+<li>unsapce 得到\x 数字组合</li>
+<li>hex 得到\u 数字组合</li>
+<li>unspace 得到可见字符串和数字</li>
+<li>dec to text 得到&amp; # x 数字组合</li>
+<li>html<br><code>&amp;#102;&amp;#108;&amp;#97;&amp;#103;&amp;#37;&amp;#55;&amp;#66;&amp;#99;&amp;#116;&amp;#102;&amp;#95;&amp;#116;&amp;#102;&amp;#99;&amp;#50;&amp;#48;&amp;#49;&amp;#55;&amp;#49;&amp;#55;&amp;#113;&amp;#119;&amp;#101;&amp;#37;&amp;#55;&amp;#68;</code></li>
+<li>unicode编码转ASCII</li>
+<li>flag</li>
+</ul>
+<h2 id=""><a href="#" class="headerlink" title=".!?"></a>.!?</h2><p>Brainfuck/Ook!</p>
+<ul>
+<li>flag{bugku_jiami}</li>
+</ul>
+<h2 id="-1"><a href="#-1" class="headerlink" title="+[]-"></a>+[]-</h2><p>同上</p>
+<ul>
+<li>flag{bugku_jiami_23}</li>
+</ul>
+<h2 id="奇怪的密码"><a href="#奇怪的密码" class="headerlink" title="奇怪的密码"></a>奇怪的密码</h2><p>gndk€rlqhmtkwwp}z 类似异变的凯撒</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gndk的10进制的ASCII码分别是：103 110 100 107</span><br><span class="line">flag的10进制的ASCII码分别是  ：102 108  97  103</span><br></pre></td></tr></table></figure>
+<ul>
+<li>规律为加1.2.3.4…</li>
+<li><code>102 108 97 103 8359 108 101 105 95 99 105 95 106 105 97 109 105</code></li>
+<li>转换ascii</li>
+<li>flag{lei_ci_jiami}</li>
+</ul>
+<h2 id="托马斯-杰斐逊"><a href="#托马斯-杰斐逊" class="headerlink" title="托马斯.杰斐逊"></a>托马斯.杰斐逊</h2><p>转盘加密 好绕</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">1： &lt;ZWAXJGDLUBVIQHKYPNTCRMOSFE &lt;</span><br><span class="line">2： &lt;KPBELNACZDTRXMJQOYHGVSFUWI &lt;</span><br><span class="line">3： &lt;BDMAIZVRNSJUWFHTEQGYXPLOCK &lt;</span><br><span class="line">4： &lt;RPLNDVHGFCUKTEBSXQYIZMJWAO &lt;</span><br><span class="line">5： &lt;IHFRLABEUOTSGJVDKCPMNZQWXY &lt;</span><br><span class="line">6： &lt;AMKGHIWPNYCJBFZDRUSLOQXVET &lt;</span><br><span class="line">7： &lt;GWTHSPYBXIZULVKMRAFDCEONJQ &lt;</span><br><span class="line">8： &lt;NOZUTWDCVRJLXKISEFAPMYGHBQ &lt;</span><br><span class="line">9： &lt;QWATDSRFHENYVUBMCOIKZGJXPL &lt;</span><br><span class="line">10： &lt;WABMCXPLTDSRJQZGOIKFHENYVU &lt;</span><br><span class="line">11： &lt;XPLTDAOIKFZGHENYSRUBMCQWVJ &lt;</span><br><span class="line">12： &lt;TDSWAYXPLVUBOIKZGJRFHENMCQ &lt;</span><br><span class="line">13： &lt;BMCSRFHLTDENQWAOXPYVUIKZGJ &lt;</span><br><span class="line">14： &lt;XPHKZGJTDSENYVUBMLAOIRFCQW &lt;</span><br><span class="line"></span><br><span class="line">密钥： 2,5,1,3,6,4,9,7,8,14,10,13,11,12</span><br><span class="line"></span><br><span class="line">密文：HCBTSXWCRQGLES</span><br></pre></td></tr></table></figure>
+<ul>
+<li>根据对应关系2 H 第2行字符串末尾H到结尾部分放到前面</li>
+<li>以下同理<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">2：&lt;HGVSFUWIKPBELNACZDTRXMJQOY&lt;</span><br><span class="line">5：&lt;CPMNZQWXYIHFRLABEUOTSGJVDK&lt;</span><br><span class="line">1：&lt;BVIQHKYPNTCRMOSFEZWAXJGDLU〈</span><br><span class="line">3：〈TEQGYXPLOCKBDMAIZVRNSJUWFH&lt;</span><br><span class="line">6：〈SLOQXVETAMKGHIWPNYCJBFZDRU&lt;</span><br><span class="line">4：〈XQYIZMJWAORPLNDVHGFCUKTEBS&lt;</span><br><span class="line">9：〈WATDSRFHENYVUBMCOIKZGJXPLQ&lt;</span><br><span class="line">7：〈CEONJQGWTHSPYBXIZULVKMRAFD&lt;</span><br><span class="line">8：〈RJLXKISEFAPMYGHBQNOZUTWDCV&lt;</span><br><span class="line">14：〈QWXPHKZGJTDSENYVUBMLAOIRFC&lt;</span><br><span class="line">10：〈GOIKFHENYVUWABMCXPLTDSRJQZ&lt;</span><br><span class="line">13：〈LTDENQWAOXPYVUIKZGJBMCSRFH&lt;</span><br><span class="line">11：&lt;ENYSRUBMCQWVJXPLTDAOIKFZCGH〈</span><br><span class="line">12：〈SWAYXPLVUBOIKZGJRFHEN体QTD&lt;</span><br></pre></td></tr></table></figure></li>
+<li>倒数第六列含有bugku 为flag内容</li>
+<li>flag{xsxsbugkuadmin}</li>
+</ul>
+<h2 id="zip伪加密"><a href="#zip伪加密" class="headerlink" title="zip伪加密"></a>zip伪加密</h2><ul>
+<li>伪加密找到504B0102 后4byte 09改成00</li>
+<li>flag{Adm1N-B2G-kU-SZIP}</li>
+</ul>
+<h2 id="告诉你个秘密-ISCCCTF"><a href="#告诉你个秘密-ISCCCTF" class="headerlink" title="告诉你个秘密(ISCCCTF)"></a>告诉你个秘密(ISCCCTF)</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">636A56355279427363446C4A49454A7154534230526D6843</span><br><span class="line">56445A31614342354E326C4B4946467A5769426961453067</span><br></pre></td></tr></table></figure>
+<ul>
+<li>dec to ASCII</li>
+<li>base64</li>
+<li>键盘密码包围</li>
+<li>flag{ae73587ba56baef5}</li>
+</ul>
+<h2 id="这不是MD5"><a href="#这不是MD5" class="headerlink" title="这不是MD5"></a>这不是MD5</h2><p>以为多难 是hex</p>
+<ul>
+<li>直接hex to ASCII</li>
+<li>flag{ae73587ba56baef5}</li>
+</ul>
+<h2 id="贝斯家族"><a href="#贝斯家族" class="headerlink" title="贝斯家族"></a>贝斯家族</h2><ul>
+<li>base16，32，64，36，56，62，91都试试</li>
+<li>base91</li>
+<li>flag{554a5058c9021c76}</li>
+</ul>
+<h2 id="富强民主"><a href="#富强民主" class="headerlink" title="富强民主"></a>富强民主</h2><p>搞笑题</p>
+<ul>
+<li>核心价值观编码 </li>
+<li>flag{90025f7fb1959936}</li>
+</ul>
+<h2 id="python-N1CTF"><a href="#python-N1CTF" class="headerlink" title="python(N1CTF)"></a>python(N1CTF)</h2><h2 id="进制转换"><a href="#进制转换" class="headerlink" title="进制转换"></a>进制转换</h2><h2 id="affine"><a href="#affine" class="headerlink" title="affine"></a>affine</h2><h2 id="crack-it"><a href="#crack-it" class="headerlink" title="crack it"></a>crack it</h2><h2 id="rsa"><a href="#rsa" class="headerlink" title="rsa"></a>rsa</h2><h2 id="来自宇宙的信号"><a href="#来自宇宙的信号" class="headerlink" title="来自宇宙的信号"></a>来自宇宙的信号</h2><p>搜索银河语言</p>
+<ul>
+<li>flag{nopqrst}</li>
+</ul>
+
+
+<!--<a href="https://curtails.github.io/2019/08/23/Bugku-jiami-writeup/#disqus_thread" class="article-comment-link">Comments</a>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = ''; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+-->
+<div style="display:none">
+<script src="http://s4.cnzz.com/stat.php?id=&web_id=" language="JavaScript"></script>script>
+</div>
+
+
+
+
+
+
+</body>
+</html>

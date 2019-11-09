@@ -1,0 +1,131 @@
+<html>
+<head>
+	
+	<title>Jarvis OJ-MISC-WriteUp</title>
+	<meta name="keywords" content="Curtails的blog" />
+
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    
+	   <link href="/css/main.css?v=3" rel="stylesheet" type="text/css" />
+    
+        <script src="/js/util.js"></script>
+        <script>
+            if(isMobile()) {
+                loadjscssfile('../css/mobile.css', 'css');
+            } else {
+                loadjscssfile('../css/desktop.css', 'css');
+            }
+        </script> 
+    
+
+    <link rel="alternate" type="application/atom+xml" href="/atom.xml" title="Atom feed">
+
+    
+	<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=3"/>
+    
+    
+
+</head>
+
+<body>
+
+
+<h2 class="title">Jarvis OJ-MISC-WriteUp</h2>
+<!---
+<div style="text-align:center;margin-top: -10px;">
+<div class="article-category">
+发表于2019年9月11日
+
+
+
+
+ </div>
+--->
+</div>
+
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#FLAG"><span class="toc-text">FLAG</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#shell流量分析"><span class="toc-text">shell流量分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#远程登录协议"><span class="toc-text">远程登录协议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#炫酷得战队logo"><span class="toc-text">炫酷得战队logo</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#简单网管协议"><span class="toc-text">简单网管协议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SCAN"><span class="toc-text">SCAN</span></a></li></ol>
+<p>Jarvis OJ-MISC-WriteUp<br>采集猜忌菜鸡</p>
+<h2 id="FLAG"><a href="#FLAG" class="headerlink" title="FLAG"></a>FLAG</h2><p>一张写着教练我想打ctf的图片</p>
+<ul>
+<li>winhex和binwalk无果</li>
+<li>丢进stegsolve查看data extract 发现504B0304显然zip</li>
+<li>保存打开含Linux文件 在win下解压报错 在kali下解压 </li>
+<li>提升权限<code>chmod 777 1</code> 执行<code>./1</code></li>
+<li>得到flag</li>
+</ul>
+<h2 id="shell流量分析"><a href="#shell流量分析" class="headerlink" title="shell流量分析"></a>shell流量分析</h2><p>下载解压得pcapng</p>
+<ul>
+<li>小白扫描式分析 看到shell.php</li>
+<li>在某tcp流中 打印了function.py 略读式一段py加密代码</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># coding:utf-8</span></span><br><span class="line">__author__ = <span class="string">'Aklis'</span></span><br><span class="line"><span class="keyword">from</span> Crypto <span class="keyword">import</span> Random</span><br><span class="line"><span class="keyword">from</span> Crypto.Cipher <span class="keyword">import</span> AES</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">decrypt</span><span class="params">(encrypted, passphrase)</span>:</span></span><br><span class="line">  IV = encrypted[:<span class="number">16</span>]</span><br><span class="line">  aes = AES.new(passphrase, AES.MODE_CBC, IV)</span><br><span class="line">  <span class="keyword">return</span> aes.decrypt(encrypted[<span class="number">16</span>:])</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">encrypt</span><span class="params">(message, passphrase)</span>:</span></span><br><span class="line">  IV = message[:<span class="number">16</span>]</span><br><span class="line">  length = <span class="number">16</span></span><br><span class="line">  count = len(message)</span><br><span class="line">  padding = length - (count % length)</span><br><span class="line">  message = message + <span class="string">'\0'</span> * padding</span><br><span class="line">  aes = AES.new(passphrase, AES.MODE_CBC, IV)</span><br><span class="line">  <span class="keyword">return</span> aes.encrypt(message)</span><br><span class="line"></span><br><span class="line">IV = <span class="string">'YUFHJKVWEASDGQDH'</span></span><br><span class="line">message = IV + <span class="string">'flag is hctf&#123;xxxxxxxxxxxxxxx&#125;'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> len(message)</span><br><span class="line"></span><br><span class="line">example = encrypt(message, <span class="string">'Qq4wdrhhyEWe4qBF'</span>)</span><br><span class="line"><span class="keyword">print</span> example</span><br><span class="line">example = decrypt(example, <span class="string">'Qq4wdrhhyEWe4qBF'</span>) </span><br><span class="line"><span class="keyword">print</span> example</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>py中flag与IV组合经过encrypt函数加密 </li>
+<li>继续查看tcp流</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;mething/welcome/secret/not_important_secret/trash$ cat fl	</span><br><span class="line">cat flag </span><br><span class="line">mbZoEMrhAO0WWeugNjqNw3U6Tt2C+rwpgpbdWRZgfQI3MAh0sZ9qjnziUKkV90XhAOkIs/OXoYVw5uQDjVvgNA==&lt;mething/welcome/secret</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>mbZoEMrhAO0WWeugNjqNw3U6Tt2C+rwpgpbdWRZgfQI3MAh0sZ9qjnziUKkV90XhAOkIs/OXoYVw5uQDjVvgNA==</code>显然式flag且式base64编码</li>
+<li>flag解码在用给好得decrypt解密即可</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># coding:utf-8</span></span><br><span class="line">__author__ = <span class="string">'Aklis'</span></span><br><span class="line"><span class="keyword">from</span> Crypto <span class="keyword">import</span> Random</span><br><span class="line"><span class="keyword">from</span> Crypto.Cipher <span class="keyword">import</span> AES</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">decrypt</span><span class="params">(encrypted, passphrase)</span>:</span></span><br><span class="line">  IV = encrypted[:<span class="number">16</span>]</span><br><span class="line">  aes = AES.new(passphrase, AES.MODE_CBC, IV)</span><br><span class="line">  <span class="keyword">return</span> aes.decrypt(encrypted[<span class="number">16</span>:])</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">encrypt</span><span class="params">(message, passphrase)</span>:</span></span><br><span class="line">  IV = message[:<span class="number">16</span>]</span><br><span class="line">  length = <span class="number">16</span></span><br><span class="line">  count = len(message)</span><br><span class="line">  padding = length - (count % length)</span><br><span class="line">  message = message + <span class="string">'\0'</span> * padding</span><br><span class="line">  aes = AES.new(passphrase, AES.MODE_CBC, IV)</span><br><span class="line">  <span class="keyword">return</span> aes.encrypt(message)</span><br><span class="line"></span><br><span class="line">string=<span class="string">'mbZoEMrhAO0WWeugNjqNw3U6Tt2C+rwpgpbdWRZgfQI3MAh0sZ9qjnziUKkV90XhAOkIs/OXoYVw5uQDjVvgNA=='</span></span><br><span class="line">string64=base64.b64decode(string)</span><br><span class="line"><span class="keyword">print</span> string64</span><br><span class="line"><span class="keyword">print</span> decrypt(string64,<span class="string">'Qq4wdrhhyEWe4qBF'</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>hctf{n0w_U_w111_n0t_f1nd_me}</li>
+</ul>
+<h2 id="远程登录协议"><a href="#远程登录协议" class="headerlink" title="远程登录协议"></a>远程登录协议</h2><p>下载解压得pcapng hint：telnet</p>
+<ul>
+<li>查看过滤telnet</li>
+<li>查找flag 好几个一个个试</li>
+</ul>
+<h2 id="炫酷得战队logo"><a href="#炫酷得战队logo" class="headerlink" title="炫酷得战队logo"></a>炫酷得战队logo</h2><p>下载得phrack.bmp</p>
+<ul>
+<li>图片无法显示</li>
+<li>修复不成 查了以下<code>89504E47</code>存在藏着一个png</li>
+<li>创建复制导出png 打开也无法显示</li>
+<li>改一下宽高 图片有内容非常模糊</li>
+<li>图片由crc校验值（看不出）用此值反推宽高<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">16</span>,<span class="number">256</span>):</span><br><span class="line">    <span class="keyword">print</span> hex(i)[<span class="number">2</span>:]</span><br><span class="line">    b=hex(i)[<span class="number">2</span>:]</span><br><span class="line">    a=(<span class="string">'89504E470D0A1A0A0000000D49484452000001'</span>+b+<span class="string">'000001000802000000F37A5E12000000017352474200AECE1CE9000000046741......A11F3FFE0B3B73B0698B976EA80000000049454E44AE426082'</span>).decode(<span class="string">"hex"</span>)</span><br><span class="line">    f=open(<span class="string">'1\\'</span>+b+<span class="string">'.png'</span>,<span class="string">"wb"</span>)</span><br><span class="line">    f.write(a)</span><br><span class="line">    f.close()</span><br></pre></td></tr></table></figure></li>
+<li>得出宽高改 </li>
+<li>得flag</li>
+</ul>
+<h2 id="简单网管协议"><a href="#简单网管协议" class="headerlink" title="简单网管协议"></a>简单网管协议</h2><ul>
+<li>直接notepad++打开搜flag</li>
+<li>傻了得去掉flag{}</li>
+<li>077149a68b9d4f25f52bb11530f44028</li>
+</ul>
+<h2 id="SCAN"><a href="#SCAN" class="headerlink" title="SCAN"></a>SCAN</h2><p>题目：有人在内网发起了大量扫描，而且扫描次数不止一次，请你从capture日志分析一下对方第4次发起扫描时什么时候开始的，请提交你发现包编号的sha256值(小写)</p>
+<ul>
+<li>Wireshark打开 发现开头是个icmp 猜测每次扫描icmp 因此过滤icmp</li>
+<li>第四次扫描包编号 从后往前一个个猜吧 是<code>155989</code> sha256加密</li>
+<li>PCTF{0be2407512cc2a40bfb570464757fd56cd0a1d33f0bf3824dfed4f0119133c12}</li>
+</ul>
+
+
+<!--<a href="https://curtails.github.io/2019/09/11/JarvisOJ-misc-writeup/#disqus_thread" class="article-comment-link">Comments</a>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = ''; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+-->
+<div style="display:none">
+<script src="http://s4.cnzz.com/stat.php?id=&web_id=" language="JavaScript"></script>script>
+</div>
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,163 @@
+<html>
+<head>
+	
+	<title>BUUCTF-MISC-WriteUp</title>
+	<meta name="keywords" content="Curtails的blog" />
+
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    
+	   <link href="/css/main.css?v=3" rel="stylesheet" type="text/css" />
+    
+        <script src="/js/util.js"></script>
+        <script>
+            if(isMobile()) {
+                loadjscssfile('../css/mobile.css', 'css');
+            } else {
+                loadjscssfile('../css/desktop.css', 'css');
+            }
+        </script> 
+    
+
+    <link rel="alternate" type="application/atom+xml" href="/atom.xml" title="Atom feed">
+
+    
+	<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=3"/>
+    
+    
+
+</head>
+
+<body>
+
+
+<h2 class="title">BUUCTF-MISC-WriteUp</h2>
+<!---
+<div style="text-align:center;margin-top: -10px;">
+<div class="article-category">
+发表于2019年9月9日
+
+
+
+
+ </div>
+--->
+</div>
+
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#签到"><span class="toc-text">签到</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二维码"><span class="toc-text">二维码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#金三胖"><span class="toc-text">金三胖</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#N种方法解决"><span class="toc-text">N种方法解决</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#大白"><span class="toc-text">大白</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#后门查杀"><span class="toc-text">后门查杀</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#另外一个世界"><span class="toc-text">另外一个世界</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#snake"><span class="toc-text">snake</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#九连环"><span class="toc-text">九连环</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#面具下的flag"><span class="toc-text">面具下的flag</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Mysterious"><span class="toc-text">Mysterious</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据包中的线索"><span class="toc-text">数据包中的线索</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#被劫持的神秘礼物"><span class="toc-text">被劫持的神秘礼物</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#菜刀666"><span class="toc-text">菜刀666</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#刷新过的图片"><span class="toc-text">刷新过的图片</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二维码-1"><span class="toc-text">二维码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#弱口令"><span class="toc-text">弱口令</span></a></li></ol>
+<p>BUUCTF-MISC-WriteUp</p>
+<h2 id="签到"><a href="#签到" class="headerlink" title="签到"></a>签到</h2><h2 id="二维码"><a href="#二维码" class="headerlink" title="二维码"></a>二维码</h2><h2 id="金三胖"><a href="#金三胖" class="headerlink" title="金三胖"></a>金三胖</h2><h2 id="N种方法解决"><a href="#N种方法解决" class="headerlink" title="N种方法解决"></a>N种方法解决</h2><h2 id="大白"><a href="#大白" class="headerlink" title="大白"></a>大白</h2><p>…重复题太多</p>
+<h2 id="后门查杀"><a href="#后门查杀" class="headerlink" title="后门查杀"></a>后门查杀</h2><ul>
+<li>用d盾扫一下得木马</li>
+<li>查找password</li>
+<li>加上flag{}</li>
+</ul>
+<h2 id="另外一个世界"><a href="#另外一个世界" class="headerlink" title="另外一个世界"></a>另外一个世界</h2><ul>
+<li>丢进winhex得一堆二进制</li>
+<li>直接Converter.exe转字符串</li>
+<li>加上flag{}</li>
+</ul>
+<h2 id="snake"><a href="#snake" class="headerlink" title="snake"></a>snake</h2><ul>
+<li>丢进winhex末尾发现<code>V2hhdCBpcyBOaWNraSBNaW5haidzIGZhdm9yaXRlIHNvbmcgdGhhdCByZWZlcnMgdG8gc25ha2VzPwo=</code></li>
+<li>解码得<code>What is Nicki Minaj&#39;s favorite song that refers to snakes?</code> wtf？？</li>
+<li>搜索这个歌手是这首歌<code>Anaconda</code>意思为大蟒蛇</li>
+<li>丢进binwalk分离pk解压得cipher和key key得内容就是上述的base64编码 cipher意思为暗号</li>
+<li><a href="http://serpent.online-domain-tools.com/" target="_blank" rel="noopener">http://serpent.online-domain-tools.com/</a> 可以在线解密 猜测加密方式为Serpent key为<code>anaconda</code></li>
+<li>得flag</li>
+</ul>
+<h2 id="九连环"><a href="#九连环" class="headerlink" title="九连环"></a>九连环</h2><p>拿到图片</p>
+<ul>
+<li>丢进binwalk 有zip foremost出来</li>
+<li>这个压缩包是伪加密 用winhex改或者直接binwalk -e(学到了)</li>
+<li>得图片和一压缩包有密码（真压缩） </li>
+<li>这个图片binwalk没东西其实是有东西的 用工具<code>steghide</code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">steghide info good.jpg</span><br><span class="line">steghide extract -sf good.jpg</span><br></pre></td></tr></table></figure></li>
+<li>没密码直接回车即可 得ko.txt这是压缩文件密码</li>
+<li>解压得flag</li>
+</ul>
+<h2 id="面具下的flag"><a href="#面具下的flag" class="headerlink" title="面具下的flag"></a>面具下的flag</h2><ul>
+<li>丢进binwalk有东西foremost</li>
+<li>得flag.vmdk 这玩意是vm的文件但是可以用7z解压（学到了）</li>
+<li>在kali解压<code>7z x filename.7z</code>在win下用7z解压不完整（不知原因）</li>
+<li>得一堆文件其中<code>where_is_flag_part_two.txt:flag_part_two_is_here.txt</code>以及<code>_NUL</code>文件中含有Ook及brainfuck</li>
+<li>解码拼起来得flag</li>
+<li>flag{N7F5_AD5_i5_funny!}</li>
+</ul>
+<h2 id="Mysterious"><a href="#Mysterious" class="headerlink" title="Mysterious"></a>Mysterious</h2><p>这是一道逆向题</p>
+<ul>
+<li>丢进od能查找出flag但是不对 因为缺少了一项</li>
+<li>丢进ida看看定位到flag相关函数<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ( v10 == <span class="number">123</span> &amp;&amp; v12 == <span class="number">120</span> &amp;&amp; v14 == <span class="number">122</span> &amp;&amp; v13 == <span class="number">121</span> )</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="built_in">strcpy</span>(Text, <span class="string">"flag"</span>);</span><br><span class="line">        <span class="built_in">memset</span>(&amp;v7, <span class="number">0</span>, <span class="number">0xFC</span>u);</span><br><span class="line">        v8 = <span class="number">0</span>;</span><br><span class="line">        v9 = <span class="number">0</span>;</span><br><span class="line">        _itoa(v10, &amp;v5, <span class="number">10</span>);</span><br><span class="line">        <span class="built_in">strcat</span>(Text, <span class="string">"&#123;"</span>);</span><br><span class="line">        <span class="built_in">strcat</span>(Text, &amp;v5);</span><br><span class="line">        <span class="built_in">strcat</span>(Text, <span class="string">"_"</span>);</span><br><span class="line">        <span class="built_in">strcat</span>(Text, <span class="string">"Buff3r_0v3rf|0w"</span>);</span><br><span class="line">        <span class="built_in">strcat</span>(Text, <span class="string">"&#125;"</span>);</span><br><span class="line">        MessageBoxA(<span class="number">0</span>, Text, <span class="string">"well done"</span>, <span class="number">0</span>);</span><br><span class="line">      &#125;</span><br></pre></td></tr></table></figure></li>
+<li>先输出{ 其次v5 然后_ 最后Buff3r_0v3rf|0w}</li>
+<li>itoa(v10, &amp;v5, 10)是将v10字符串以十进制保存在v5中 v5=123</li>
+<li>flag{123_Buff3r_0v3rf|0w}</li>
+</ul>
+<h2 id="数据包中的线索"><a href="#数据包中的线索" class="headerlink" title="数据包中的线索"></a>数据包中的线索</h2><ul>
+<li>打开查看tcp头毫无所获</li>
+<li>/9j/为jpg头标识 加上<code>data:image/jpeg;base64</code></li>
+<li>查找http头发现一大堆字符串</li>
+<li><code>/9j/</code>经base64解码后结果为“\xff \xd8 \xff”，该三字节为jpg文件的开头三字节<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD.......</span><br></pre></td></tr></table></figure></li>
+<li>base64转图片得到含有flag得路飞得图片</li>
+<li>flag{209acebf6324a09671abc31c869de72c}</li>
+</ul>
+<h2 id="被劫持的神秘礼物"><a href="#被劫持的神秘礼物" class="headerlink" title="被劫持的神秘礼物"></a>被劫持的神秘礼物</h2><p>下载得文件gift.pcapnggift.pcapng</p>
+<ul>
+<li>打开进行分析 题目说是账号密码 一般跟登录有关<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">4	0.003591	192.168.78.134	192.168.60.123	HTTP	704	POST /index.php?r=member/index/login HTTP/1.1  (application/x-www-form-urlencoded)</span><br></pre></td></tr></table></figure></li>
+<li>post传参 以及网址是index/login 查看流</li>
+<li>找到name及word<code>adminaadminb</code><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line">date=<span class="string">'adminaadminb'</span></span><br><span class="line">m=hashlib.md5(date.encode(<span class="string">'utf-8'</span>))</span><br><span class="line">print(m.hexdigest())</span><br></pre></td></tr></table></figure></li>
+<li>flag{1d240aafe21a86afc11f38a45b541a49}</li>
+</ul>
+<h2 id="菜刀666"><a href="#菜刀666" class="headerlink" title="菜刀666"></a>菜刀666</h2><h2 id="刷新过的图片"><a href="#刷新过的图片" class="headerlink" title="刷新过的图片"></a>刷新过的图片</h2><p>F5隐写 下载F5-steganography 进入目录</p>
+<ul>
+<li><code>java Extract Misc.jpg（图片的绝对路径） -e res.zip</code></li>
+<li>压缩包伪加密</li>
+<li>解压打开txt得flag</li>
+<li>flag{96efd0a2037d06f34199e921079778ee}</li>
+</ul>
+<h2 id="二维码-1"><a href="#二维码-1" class="headerlink" title="二维码"></a>二维码</h2><p>被撕成九份的二维码？？有啥意思考验我ps水平？</p>
+<ul>
+<li>上ps套索然后拼在一起</li>
+<li>尽力了 <a href="https://i.loli.net/2019/09/10/2Vxho6rPFtzBQZw.png" target="_blank" rel="noopener">图片</a></li>
+<li>有那么一瞬间可以扫</li>
+<li>flag{7bf116c8ec2545708781fd4a0dda44e5}</li>
+</ul>
+<h2 id="弱口令"><a href="#弱口令" class="headerlink" title="弱口令"></a>弱口令</h2><p>得一压缩包有密码 提示弱口令</p>
+<ul>
+<li>我还真以为弱口令 换了俩个字典无果</li>
+<li>压缩包里注释有东西 是一大堆不可见字符<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"> </span><br></pre></td></tr></table></figure></li>
+<li>这些字符串放到sublime里能看见是由点和横组成的 像摩斯电码</li>
+<li>可惜我手上没有sublime 只有vscode和notepad++ 放到notepad++里右键style token在一步步按键盘右键 也能比较方便写出莫斯电码</li>
+<li><code>.... . .-.. .-.. ----- ..-. --- .-. ..- --</code> to<code>HELL0FORUM</code></li>
+<li>解压得png</li>
+<li>winhex无果由于png考虑lsb隐写无果 可能是加密的lsb</li>
+<li>使用<code>cloacked-pixel</code>在kali下 因为是弱口令猜测123456<code>python lsb.py extract nvshen.png res.txt 123456</code> </li>
+<li>得res.txt打开为flag</li>
+<li>flag{jsy09-wytg5-wius8}</li>
+</ul>
+
+
+<!--<a href="https://curtails.github.io/2019/09/09/BUUCTF-misc-writeup/#disqus_thread" class="article-comment-link">Comments</a>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = ''; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+-->
+<div style="display:none">
+<script src="http://s4.cnzz.com/stat.php?id=&web_id=" language="JavaScript"></script>script>
+</div>
+
+
+
+
+
+
+</body>
+</html>

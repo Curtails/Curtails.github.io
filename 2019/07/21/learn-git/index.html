@@ -1,0 +1,193 @@
+<html>
+<head>
+	
+	<title>Learn Git</title>
+	<meta name="keywords" content="Curtails的blog" />
+
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    
+	   <link href="/css/main.css?v=3" rel="stylesheet" type="text/css" />
+    
+        <script src="/js/util.js"></script>
+        <script>
+            if(isMobile()) {
+                loadjscssfile('../css/mobile.css', 'css');
+            } else {
+                loadjscssfile('../css/desktop.css', 'css');
+            }
+        </script> 
+    
+
+    <link rel="alternate" type="application/atom+xml" href="/atom.xml" title="Atom feed">
+
+    
+	<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=3"/>
+    
+    
+
+</head>
+
+<body>
+
+
+<h2 class="title">Learn Git</h2>
+<!---
+<div style="text-align:center;margin-top: -10px;">
+<div class="article-category">
+发表于2019年7月21日
+
+
+
+
+ </div>
+--->
+</div>
+
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#版本管理功能"><span class="toc-text">版本管理功能</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#回溯"><span class="toc-text">回溯</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#协同"><span class="toc-text">协同</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分支"><span class="toc-text">分支</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#git目录中有什么？"><span class="toc-text">.git目录中有什么？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Git常用命令"><span class="toc-text">Git常用命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#附录"><span class="toc-text">附录</span></a></li></ol>
+<p>写的很混乱，复习用。</p>
+<ul>
+<li>原理</li>
+<li>命令</li>
+<li>vscode&amp;git</li>
+</ul>
+<h2 id="版本管理功能"><a href="#版本管理功能" class="headerlink" title="版本管理功能"></a>版本管理功能</h2><h3 id="回溯"><a href="#回溯" class="headerlink" title="回溯"></a>回溯</h3><p>git采用全量存储，类似于Content-addressable的文件系统。</p>
+<p><strong>.git目录</strong>：版本库存储不同版本的文件。</p>
+<p><strong>文件名</strong>：.git中的文件采用SHA1函数值（40位）作为文件名。</p>
+<p><strong>版本库与代码库的文件对应方式</strong>：使用树结构可描述文件名、目录结构及SHA1。类似于快照。</p>
+<p><strong>Commit（提交）</strong>：提交记录快照、记录人信息及上一次提交的SHA1。</p>
+<p><img src="https://raw.githubusercontent.com/Curtails/learninggit/master/image/commit.png" alt="commit"></p>
+<p><strong>暂存区（index）</strong>：介于代码库和版本库中的缓冲区域。</p>
+<p>以下为暂存区分别与代码库和版本库的状态比较：</p>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>暂存区</th>
+<th>SHA1</th>
+<th>状态</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>在</td>
+<td>在</td>
+<td>不匹配</td>
+<td>modified</td>
+</tr>
+<tr>
+<td>不存在</td>
+<td>在</td>
+<td></td>
+<td>removed</td>
+</tr>
+<tr>
+<td>在</td>
+<td>不存在</td>
+<td></td>
+<td>added</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>暂存区</th>
+<th>.git</th>
+<th>SHA1</th>
+<th>状态</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>在</td>
+<td>在</td>
+<td>不匹配</td>
+<td>modified</td>
+</tr>
+<tr>
+<td>不存在</td>
+<td>在</td>
+<td></td>
+<td>missing</td>
+</tr>
+<tr>
+<td>在</td>
+<td>不存在</td>
+<td></td>
+<td>untracked</td>
+</tr>
+</tbody></table>
+<h3 id="协同"><a href="#协同" class="headerlink" title="协同"></a>协同</h3><ul>
+<li><p>分布式版本控制。</p>
+</li>
+<li><p>服务端与本地端都有一份完好的版本库。</p>
+</li>
+</ul>
+<p>push：将本地版本库的代码推送到服务器。</p>
+<p>pull：将服务器端的代码拉取到本地。</p>
+<h3 id="分支"><a href="#分支" class="headerlink" title="分支"></a>分支</h3><p>默认分支为master。</p>
+<p>分支是指向提交的指针，可以在不同的分支上开发产生了新的提交，开发完成后就可以合并成主干了。</p>
+<p>例如有两个分支如下图所示：</p>
+<p><img src="https://raw.githubusercontent.com/Curtails/learninggit/master/image/branch1.png" alt="branch1"></p>
+<ul>
+<li><p>两个分支功能开发完成后，开始合并。</p>
+</li>
+<li><p><strong>第一步合并</strong>将master指向weixin并删掉weixin分支。</p>
+</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/Curtails/learninggit/master/image/branch2.png" alt="branch2"></p>
+<ul>
+<li><p>第二步可以有以下两种情况：</p>
+<ul>
+<li><strong>merge合并</strong>：三方合并，将微信登陆2、QQ登录2及共同父节点登录，进行一个三分合并。</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/Curtails/learninggit/master/image/branch3.png" alt="branch3"></p>
+</li>
+</ul>
+<ul>
+<li><strong>rebase（变基）</strong>：将微博登录2和登录合并成一个新的提交，在QQ登录2后面应用。</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/Curtails/learninggit/master/image/branch4.png" alt="branch4"></p>
+<h3 id="git目录中有什么？"><a href="#git目录中有什么？" class="headerlink" title=".git目录中有什么？"></a>.git目录中有什么？</h3><ul>
+<li>HEAD：描述当前分支HEAD的位置</li>
+<li>index</li>
+<li>objects：存放文件全量历史数据<ul>
+<li>objects中的文件夹名与文件夹中的文件名拼凑起来就是用git add文件的SHA1</li>
+</ul>
+</li>
+</ul>
+<h2 id="Git常用命令"><a href="#Git常用命令" class="headerlink" title="Git常用命令"></a>Git常用命令</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">git init					//初始化项目</span><br><span class="line">git add hello.txt			//文件从代码区放到暂存区</span><br><span class="line">git reset HEAD -- hello.txt	//文件从暂存区移出</span><br><span class="line">git cat-file -p SHA1		//查看文件内容</span><br><span class="line">git ls-files --stage		//查看暂存区index内容</span><br><span class="line">git commit -m &apos;message&apos;		//将暂存区数据提交到仓库，附带信息</span><br><span class="line">git config --global user.name &quot;Your Name&quot;			//设置名字及email地址</span><br><span class="line">git config --global user.email &quot;email@example.com&quot;	</span><br><span class="line">git status					//查看暂存区内容</span><br><span class="line">git diff filename			//查看文件修改</span><br><span class="line">git branch name				//创建分支</span><br><span class="line">git checkout branch			//切换分支</span><br><span class="line">git merge branch			//合并分支</span><br><span class="line">git merge --abort			//恢复merge之前状态</span><br><span class="line">git log						//查看日志</span><br><span class="line">git checkout SHA1			//回溯到SHA1值对应文件</span><br><span class="line">git clone repo				//从服务器端拷贝一个项目</span><br><span class="line">git remote					//查看到所有关联到当前仓库的远程仓库</span><br><span class="line">git remote show name		//查看远程仓库详细信息</span><br><span class="line">git remote add name url		//关联本地仓库和远程仓库name为别名 url为远程仓库地址</span><br><span class="line">git push name branch		//推送代码到远程仓库</span><br><span class="line">git pull name branch		//从远程仓库拉取代码</span><br><span class="line">git remote remove nanme		//删除远程仓库</span><br><span class="line">git stash					//将当前进行中的工作保存到一个暂存区域然后将当前目录回滚到上一次提交</span><br><span class="line">git stash apply				//回滚git stash保存的工作</span><br><span class="line">git stash list				//列出暂存区域保存的进行中的工作</span><br></pre></td></tr></table></figure>
+
+<h2 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h2><p><a href="https://www.cnblogs.com/xiangxinhouse/p/8254120.html" target="_blank" rel="noopener">fatal: refusing to merge unrelated histories</a></p>
+<p><a href="https://www.jianshu.com/p/ca1f257fdf59" target="_blank" rel="noopener">Git远程同步Github代码 SSH Key是必须的吗</a></p>
+<p><a href="https://blog.csdn.net/u011859677/article/details/79249436" target="_blank" rel="noopener">配置SSH</a></p>
+<p><a href="https://blog.csdn.net/zhangkui0418/article/details/82977519" target="_blank" rel="noopener">Updates were rejected because the tip of your current branch is behind</a></p>
+<p><a href="https://blog.csdn.net/weixin_38317875/article/details/80925750" target="_blank" rel="noopener">用SSH与GIthub建立联系</a></p>
+<p><a href="https://blog.csdn.net/starry_night9280/article/details/53207928" target="_blank" rel="noopener">Git warning：LF will be replaced by CRLF</a></p>
+
+
+<!--<a href="https://curtails.github.io/2019/07/21/learn-git/#disqus_thread" class="article-comment-link">Comments</a>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = ''; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+-->
+<div style="display:none">
+<script src="http://s4.cnzz.com/stat.php?id=&web_id=" language="JavaScript"></script>script>
+</div>
+
+
+
+
+
+
+</body>
+</html>

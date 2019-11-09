@@ -1,0 +1,89 @@
+<html>
+<head>
+	
+	<title>Windows-process</title>
+	<meta name="keywords" content="Curtails的blog" />
+
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    
+	   <link href="/css/main.css?v=3" rel="stylesheet" type="text/css" />
+    
+        <script src="/js/util.js"></script>
+        <script>
+            if(isMobile()) {
+                loadjscssfile('../css/mobile.css', 'css');
+            } else {
+                loadjscssfile('../css/desktop.css', 'css');
+            }
+        </script> 
+    
+
+    <link rel="alternate" type="application/atom+xml" href="/atom.xml" title="Atom feed">
+
+    
+	<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=3"/>
+    
+    
+
+</head>
+
+<body>
+
+
+<h2 class="title">Windows-process</h2>
+<!---
+<div style="text-align:center;margin-top: -10px;">
+<div class="article-category">
+发表于2019年10月13日
+
+
+
+
+ </div>
+--->
+</div>
+
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#TARTUPINFO结构体-指定进程窗口特性"><span class="toc-text">TARTUPINFO结构体 指定进程窗口特性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PROCESS-INFORMATION存储线程的相关信息"><span class="toc-text">PROCESS_INFORMATION存储线程的相关信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PROCESSENTRY32-存放进程信息快照"><span class="toc-text">PROCESSENTRY32 存放进程信息快照</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CreateToolhelp32Snapshot"><span class="toc-text">CreateToolhelp32Snapshot</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Process32First与Process32Next"><span class="toc-text">Process32First与Process32Next</span></a></li></ol>
+<h2 id="TARTUPINFO结构体-指定进程窗口特性"><a href="#TARTUPINFO结构体-指定进程窗口特性" class="headerlink" title="TARTUPINFO结构体 指定进程窗口特性"></a>TARTUPINFO结构体 指定进程窗口特性</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> _<span class="title">STARTUPINFO</span> </span></span><br><span class="line"><span class="class">&#123;</span> </span><br><span class="line">	DWORD cb;			 	 <span class="comment">//包含STARTUPINFO结构中的字节数.如果Microsoft将来扩展该结构,它可用作版本控制手段.应用程序必须将cb初始化为sizeof(STARTUPINFO) </span></span><br><span class="line">    PSTR lpReserved;		 <span class="comment">//保留。必须初始化为NULL</span></span><br><span class="line">    PSTR lpDesktop;			 <span class="comment">//用于标识启动应用程序所在的桌面的名字。如果该桌面存在，新进程便与指定的桌面相关联。如果桌面不存在，便创建一个带有默认属性的桌面，并使用为新进程指定的名字。如果lpDesktop是NULL（这是最常见的情况 ),那么该进程将与当前桌面相关联 </span></span><br><span class="line">    PSTR lpTitle;			 <span class="comment">//用于设定控制台窗口的名称。如果lpTitle是NULL，则可执行文件的名字将用作窗口名.This parameter must be NULL for GUI or console processes that do not create a new console window.</span></span><br><span class="line">    DWORD dwX;				 <span class="comment">//用于设定应用程序窗口相对屏幕左上角位置的x 坐标（以像素为单位）。 </span></span><br><span class="line">    DWORD dwY;				 <span class="comment">//对于GUI processes用CW_USEDEFAULT作为CreateWindow的x、y参数，创建它的第一个重叠窗口。若是创建控制台窗口的应用程序，这些成员用于指明相对控制台窗口的左上角的位置</span></span><br><span class="line">    DWORD dwXSize;			 <span class="comment">//用于设定应用程序窗口的宽度（以像素为单位）</span></span><br><span class="line">    DWORD dwYSize;			 <span class="comment">//子进程将CW_USEDEFAULT 用作CreateWindow 的nWidth、nHeight参数来创建它的第一个重叠窗口。若是创建控制台窗口的应用程序，这些成员将用于指明控制台窗口的宽度 </span></span><br><span class="line">    DWORD dwXCountChars;	 <span class="comment">//用于设定子应用程序的控制台窗口的宽度（屏幕显示的字节列）和高度（字节行）（以字符为单位） </span></span><br><span class="line">    DWORD dwYCountChars; </span><br><span class="line">    DWORD dwFillAttribute;   <span class="comment">//用于设定子应用程序的控制台窗口使用的文本和背景颜色 </span></span><br><span class="line">    DWORD dwFlags;           <span class="comment">//请参见下一段和表4-7 的说明 </span></span><br><span class="line">    WORD wShowWindow;        <span class="comment">//用于设定如果子应用程序初次调用的ShowWindow 将SW_*作为nCmdShow 参数传递时，该应用程序的第一个重叠窗口应该如何出现。本成员可以是通常用于ShowWindow 函数的任何一个SW_*标识符，除了SW_SHOWDEFAULT. </span></span><br><span class="line">    WORD cbReserved2;        <span class="comment">//保留。必须被初始化为0 </span></span><br><span class="line">    PBYTE lpReserved2;       <span class="comment">//保留。必须被初始化为NULL</span></span><br><span class="line">    HANDLE hStdInput;        <span class="comment">//用于设定供控制台输入和输出用的缓存的句柄。按照默认设置，hStdInput 用于标识键盘缓存，hStdOutput 和hStdError用于标识控制台窗口的缓存 </span></span><br><span class="line">    HANDLE hStdOutput; </span><br><span class="line">    HANDLE hStdError; </span><br><span class="line">&#125; STARTUPINFO, *LPSTARTUPINFO;</span><br></pre></td></tr></table></figure>
+
+<h2 id="PROCESS-INFORMATION存储线程的相关信息"><a href="#PROCESS-INFORMATION存储线程的相关信息" class="headerlink" title="PROCESS_INFORMATION存储线程的相关信息"></a>PROCESS_INFORMATION存储线程的相关信息</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> _<span class="title">PROCESS_INFORMATION</span> &#123;</span> </span><br><span class="line">    HANDLE hProcess; <span class="comment">//存放每个对象的与进程相关的句柄 </span></span><br><span class="line">    HANDLE hThread;        <span class="comment">//返回的线程句柄。 </span></span><br><span class="line">    DWORD dwProcessId;    <span class="comment">//用来存放进程ID号 </span></span><br><span class="line">    DWORD dwThreadId;      <span class="comment">//用来存放线程ID号 </span></span><br><span class="line">&#125; PROCESS_INFORMATION, *PPROCESS_INFORMATION, *LPPROCESS_INFORMATION;</span><br></pre></td></tr></table></figure>
+
+<h2 id="PROCESSENTRY32-存放进程信息快照"><a href="#PROCESSENTRY32-存放进程信息快照" class="headerlink" title="PROCESSENTRY32 存放进程信息快照"></a>PROCESSENTRY32 存放进程信息快照</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">PROCESSENTRY32结构如下：    </span><br><span class="line"> <span class="keyword">typedef</span>   <span class="class"><span class="keyword">struct</span>   <span class="title">tagPROCESSENTRY32</span>   &#123;</span>    </span><br><span class="line"> DWORD   dwSize;   <span class="comment">//   结构大小；    </span></span><br><span class="line"> DWORD   cntUsage;   <span class="comment">//   此进程的引用计数；    </span></span><br><span class="line"> DWORD   th32ProcessID;   <span class="comment">//   进程ID;    </span></span><br><span class="line"> DWORD   th32DefaultHeapID;   <span class="comment">//   进程默认堆ID；    </span></span><br><span class="line"> DWORD   th32ModuleID;   <span class="comment">//   进程模块ID；    </span></span><br><span class="line"> DWORD   cntThreads;   <span class="comment">//   此进程开启的线程计数；    </span></span><br><span class="line"> DWORD   th32ParentProcessID;<span class="comment">//   父进程ID；    </span></span><br><span class="line"> LONG   pcPriClassBase;   <span class="comment">//   线程优先权；    </span></span><br><span class="line"> DWORD   dwFlags;   <span class="comment">//   保留；    </span></span><br><span class="line"> <span class="keyword">char</span>   szExeFile[MAX_PATH];   <span class="comment">//   进程全名；    </span></span><br><span class="line"> &#125;   PROCESSENTRY32;</span><br></pre></td></tr></table></figure>
+
+<h2 id="CreateToolhelp32Snapshot"><a href="#CreateToolhelp32Snapshot" class="headerlink" title="CreateToolhelp32Snapshot"></a>CreateToolhelp32Snapshot</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">HANDLE_WINAPI <span class="title">CreateToolHelp32Snapshot</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">                                       DWORD dwFlags,	<span class="comment">//指定了获取系统进程快照的类型</span></span></span></span><br><span class="line"><span class="function"><span class="params">                                       DWORD th32ParentProcessID<span class="comment">//指向要获取进程快照的ID，获取系统内所有进程快照时是0</span></span></span></span><br><span class="line"><span class="function"><span class="params">                                      )</span></span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Process32First与Process32Next"><a href="#Process32First与Process32Next" class="headerlink" title="Process32First与Process32Next"></a>Process32First与Process32Next</h2><p>如果<code>CreateToolhelp32Snapshot</code>函数调用成功返回快照句柄 需要调用Process32First函数查找系统进程的第一个进程</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">BOOL <span class="title">Process32First</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">                    HANDLE hSnapshot,</span></span></span><br><span class="line"><span class="function"><span class="params">                    LPROCESSENTRY32 lppe</span></span></span><br><span class="line"><span class="function"><span class="params">                   )</span></span>;</span><br></pre></td></tr></table></figure>
+<p>再调用Process32Next函数列出系统中其它进程</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">BOOL <span class="title">Process32Next</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">                    HANDLE hSnapshot,</span></span></span><br><span class="line"><span class="function"><span class="params">                    LPROCESSENTRY32 lppe</span></span></span><br><span class="line"><span class="function"><span class="params">                   )</span></span>;</span><br></pre></td></tr></table></figure>
+<p>一个输出系统进程的demo</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;windows.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;tlhelp32.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">GetProcess</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">//PROCESSENTRY32结构体，保存进程具体信息</span></span><br><span class="line">	PROCESSENTRY32 pe32;</span><br><span class="line">	pe32.dwSize = <span class="keyword">sizeof</span>(pe32);</span><br><span class="line">	<span class="comment">//获得系统进程快照的句柄</span></span><br><span class="line">	HANDLE hProcessSnap = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, <span class="number">0</span>);</span><br><span class="line">	<span class="keyword">if</span> (hProcessSnap == INVALID_HANDLE_VALUE)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"CreateToolhelp32Snapshot error.\n"</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//首先获得第一个进程</span></span><br><span class="line">	BOOL bProcess = Process32First(hProcessSnap, &amp;pe32);</span><br><span class="line">	<span class="comment">//循环获得所有进程</span></span><br><span class="line">	<span class="keyword">while</span> (bProcess)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">//打印进程名和进程ID</span></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%ls----%d\n"</span>, pe32.szExeFile, pe32.th32ProcessID);</span><br><span class="line">		bProcess = Process32Next(hProcessSnap, &amp;pe32);</span><br><span class="line">	&#125;</span><br><span class="line">	CloseHandle(hProcessSnap);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	GetProcess();</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<!--<a href="https://curtails.github.io/2019/10/13/win-process/#disqus_thread" class="article-comment-link">Comments</a>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = ''; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+-->
+<div style="display:none">
+<script src="http://s4.cnzz.com/stat.php?id=&web_id=" language="JavaScript"></script>script>
+</div>
+
+
+
+
+
+
+</body>
+</html>

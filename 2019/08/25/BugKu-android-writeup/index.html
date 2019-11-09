@@ -1,0 +1,85 @@
+<html>
+<head>
+	
+	<title>BugkuCTF-安卓-WriteUp</title>
+	<meta name="keywords" content="Curtails的blog" />
+
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    
+	   <link href="/css/main.css?v=3" rel="stylesheet" type="text/css" />
+    
+        <script src="/js/util.js"></script>
+        <script>
+            if(isMobile()) {
+                loadjscssfile('../css/mobile.css', 'css');
+            } else {
+                loadjscssfile('../css/desktop.css', 'css');
+            }
+        </script> 
+    
+
+    <link rel="alternate" type="application/atom+xml" href="/atom.xml" title="Atom feed">
+
+    
+	<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=3"/>
+    
+    
+
+</head>
+
+<body>
+
+
+<h2 class="title">BugkuCTF-安卓-WriteUp</h2>
+<!---
+<div style="text-align:center;margin-top: -10px;">
+<div class="article-category">
+发表于2019年8月25日
+
+
+
+
+ </div>
+--->
+</div>
+
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#signin"><span class="toc-text">signin</span></a></li></ol>
+<p>BugkuCTF-安卓-WriteUp</p>
+<h2 id="signin"><a href="#signin" class="headerlink" title="signin"></a>signin</h2><p>下载得zip解压得Sign_in.apk</p>
+<ul>
+<li>jadx打开，找到关键比较点checkPassword，就是将flag base64后再翻转后与getflag的字符串进行比较</li>
+<li>strig是保存在values下面的string.xml中</li>
+<li>找到base64按照源码先翻转在解码</li>
+<li><code>991YiZWOz81ZhFjZfJXdwk3X1k2XzIXZIt3ZhxmZ</code>to<code>ZmxhZ3tIZXIzX2k1X3kwdXJfZjFhZ18zOWZiY199</code>解码</li>
+<li>flag{Her3_i5_y0ur_f1ag_39fbc_}</li>
+</ul>
+
+
+<!--<a href="https://curtails.github.io/2019/08/25/BugKu-android-writeup/#disqus_thread" class="article-comment-link">Comments</a>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = ''; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+-->
+<div style="display:none">
+<script src="http://s4.cnzz.com/stat.php?id=&web_id=" language="JavaScript"></script>script>
+</div>
+
+
+
+
+
+
+</body>
+</html>
